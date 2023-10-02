@@ -1,0 +1,23 @@
+{
+  "engines": {
+    "node": ">=18.16.1"
+  },
+  "main": "src/main.ts",
+  "scripts": {
+    "compile": "tsc",
+    "start": "node ./dist/main.js",
+    "dev": "nodemon ./src/main.ts"
+  },
+  "author": "37nerds<37nerds@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.14.2"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.9",
+    "@types/node": "^20.8.0",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}
