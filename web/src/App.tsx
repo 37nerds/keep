@@ -1,5 +1,11 @@
+import Header from "./layout/Header";
+
 const App = () => {
-    return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  return (
+    <div className="px-5">
+      <Header />
+    </div>
+  );
 };
 
 export default App;
