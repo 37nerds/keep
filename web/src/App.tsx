@@ -2,7 +2,7 @@ import Header from "./layout/Header";
 
 const App = () => {
   return (
-    <div className="px-5">
+    <div className="bg-[#202124] h-screen text-white" >
       <Header />
     </div>
   );
