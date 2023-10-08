@@ -4,15 +4,11 @@ import { TActiveTab, TIcon } from "../types";
 const SidebarItem = ({
     label,
     icon: Icon,
-    activeTab,
-    setActiveTab,
 }: {
     label: TActiveTab;
     icon: TIcon;
-    activeTab: TActiveTab;
-    setActiveTab: (activeTab: TActiveTab) => void;
 }) => {
-    const { sidebarCollapse } = useLayoutStore(state => state);
+    const { sidebarCollapse, activeTab, setActiveTab } = useLayoutStore(state => state);
 
     return (
         <li
