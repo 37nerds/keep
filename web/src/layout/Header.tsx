@@ -2,6 +2,7 @@ import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import ArrowPathIcon from "@heroicons/react/24/outline/ArrowPathIcon";
 import Cog6ToothIcon from "@heroicons/react/24/outline/Cog6ToothIcon";
 import QueueListIcon from "@heroicons/react/24/outline/QueueListIcon";
+import UserCircleIcon from "@heroicons/react/24/outline/UserCircleIcon";
 import SearchInput from "../components/SearchInput";
 import HeaderIcon from "../components/HeaderIcon";
 
@@ -23,11 +24,7 @@ const Header = () => {
                 </div>
                 <div>
                     <div className="ml-16 p-1 rounded-full">
-                        <img
-                            src="/favicon.svg"
-                            alt="profile picture"
-                            className="w-8 h-8"
-                        />
+                        <UserCircleIcon className="w-10 rounded-full cursor-pointer" />
                     </div>
                 </div>
             </div>
