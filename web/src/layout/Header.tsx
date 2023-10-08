@@ -1,17 +1,19 @@
-import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import ArrowPathIcon from "@heroicons/react/24/outline/ArrowPathIcon";
+import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import Cog6ToothIcon from "@heroicons/react/24/outline/Cog6ToothIcon";
 import QueueListIcon from "@heroicons/react/24/outline/QueueListIcon";
 import UserCircleIcon from "@heroicons/react/24/outline/UserCircleIcon";
-import SearchInput from "../components/SearchInput";
 import HeaderIcon from "../components/HeaderIcon";
+import SearchInput from "../components/SearchInput";
+import useLayoutStore from "../states/layout_store";
 
 const Header = () => {
+    const {toggleSidebarCollapse} = useLayoutStore(state => state)
     return (
-        <nav className="flex items-center justify-between py-2 border-b border-[#5f6367] px-5">
+        <nav className="flex items-center justify-between border-b border-[#5f6367] px-5 py-2">
             <div className="flex items-center gap-4">
-                <HeaderIcon icon={Bars3Icon} />
-                <div className="text-xl font-normal cursor-pointer mr-16">
+                <HeaderIcon icon={Bars3Icon} onClick={toggleSidebarCollapse} />
+                <div className="mr-16 cursor-pointer text-xl font-normal">
                     Keep
                 </div>
                 <SearchInput />
@@ -23,8 +25,8 @@ const Header = () => {
                     <HeaderIcon icon={Cog6ToothIcon} />
                 </div>
                 <div>
-                    <div className="ml-16 p-1 rounded-full">
-                        <UserCircleIcon className="w-10 rounded-full cursor-pointer" />
+                    <div className="ml-16 rounded-full p-1">
+                        <UserCircleIcon className="w-10 cursor-pointer rounded-full" />
                     </div>
                 </div>
             </div>

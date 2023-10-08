@@ -1,16 +1,17 @@
-import type {
-    ForwardRefExoticComponent,
-    PropsWithoutRef,
-    SVGProps,
-} from "react";
+import { TIcon } from "../types";
 
-export type TIcon = ForwardRefExoticComponent<
-    PropsWithoutRef<SVGProps<SVGSVGElement>>
->;
-
-const HeaderIcon = ({ icon: Icon }: { icon: TIcon }) => {
+const HeaderIcon = ({
+    icon: Icon,
+    onClick,
+}: {
+    icon: TIcon;
+    onClick?: () => void;
+}) => {
     return (
-        <div className="hover:bg-slate-700 p-3 rounded-full cursor-pointer transition">
+        <div
+            className="cursor-pointer rounded-full p-3 transition hover:bg-slate-700"
+            onClick={onClick}
+        >
             <Icon className="w-6" />
         </div>
     );
