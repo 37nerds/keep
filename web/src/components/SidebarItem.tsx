@@ -8,19 +8,28 @@ const SidebarItem = ({
     label: TActiveTab;
     icon: TIcon;
 }) => {
-    const { sidebarCollapse, activeTab, setActiveTab } = useLayoutStore(state => state);
+    const { sidebarCollapse, activeTab, setActiveTab, isSidebarInHover } =
+        useLayoutStore(state => state);
 
     return (
         <li
             className={`flex cursor-pointer items-center gap-8 rounded-r-full px-8 py-3 text-sm ${
-                sidebarCollapse
-                    ? "w-[80px] rounded-full hover:w-[280px]"
-                    : "w-[280px]"
+                sidebarCollapse ? "" : " "
             } ${activeTab === label ? "bg-[#41331C]" : "hover:bg-[#28292c]"}`}
             onClick={() => setActiveTab(label)}
         >
             <Icon className="w-6" />
-            <span className={sidebarCollapse ? "hidden" : ""}>{label}</span>
+            <span
+                className={`${
+                    sidebarCollapse
+                        ? isSidebarInHover
+                            ? "hover:absolute"
+                            : "hidden"
+                        : ""
+                }`}
+            >
+                {label}
+            </span>
         </li>
     );
 };

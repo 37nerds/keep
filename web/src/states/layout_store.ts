@@ -7,8 +7,11 @@ type TStore = {
     sidebarCollapse: boolean;
     toggleSidebarCollapse: () => void;
 
-    activeTab: TActiveTab,
+    activeTab: TActiveTab;
     setActiveTab: (activeTab: TActiveTab) => void;
+
+    isSidebarInHover: boolean;
+    setIsSidebarInHover: (isSidebarInHover: boolean) => void;
 };
 
 const useLayoutStore = create<TStore>()(
@@ -25,8 +28,15 @@ const useLayoutStore = create<TStore>()(
             setActiveTab: activeTab => {
                 set(state => {
                     state.activeTab = activeTab;
-                })
-            }
+                });
+            },
+
+            isSidebarInHover: false,
+            setIsSidebarInHover: isSidebarInHover => {
+                set(state => {
+                    state.isSidebarInHover = isSidebarInHover;
+                });
+            },
         })),
     ),
 );
