@@ -1,11 +1,11 @@
+import HeaderIcon from "@/components/HeaderIcon";
+import SearchInput from "@/components/SearchInput";
+import useLayoutStore from "@/states/layout_store";
 import ArrowPathIcon from "@heroicons/react/24/outline/ArrowPathIcon";
 import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import Cog6ToothIcon from "@heroicons/react/24/outline/Cog6ToothIcon";
 import QueueListIcon from "@heroicons/react/24/outline/QueueListIcon";
 import UserCircleIcon from "@heroicons/react/24/outline/UserCircleIcon";
-import HeaderIcon from "../components/HeaderIcon";
-import SearchInput from "../components/SearchInput";
-import useLayoutStore from "../states/layout_store";
 
 const Header = () => {
     const {toggleSidebarCollapse} = useLayoutStore(state => state)

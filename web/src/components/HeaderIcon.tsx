@@ -1,4 +1,4 @@
-import { TIcon } from "../types";
+import { TIcon } from "@/types";
 
 const HeaderIcon = ({
     icon: Icon,

@@ -1,5 +1,5 @@
-import useLayoutStore from "../states/layout_store";
-import { TActiveTab, TIcon } from "../types";
+import { TActiveTab, TIcon } from "@/types";
+import useLayoutStore from "@/states/layout_store";
 
 const SidebarItem = ({
     label,
@@ -9,7 +9,7 @@ const SidebarItem = ({
     icon: TIcon;
 }) => {
     const { sidebarCollapse, activeTab, setActiveTab, isSidebarInHover } =
-        useLayoutStore(state => state);
+        useLayoutStore();
 
     return (
         <li
@@ -21,11 +21,7 @@ const SidebarItem = ({
             <Icon className="w-6" />
             <span
                 className={`${
-                    sidebarCollapse
-                        ? isSidebarInHover
-                            ? "hover:absolute"
-                            : "hidden"
-                        : ""
+                    sidebarCollapse ? (isSidebarInHover ? "" : "hidden") : ""
                 }`}
             >
                 {label}

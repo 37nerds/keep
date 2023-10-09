@@ -4,9 +4,9 @@ import Sidebar from "./layout/Sidebar";
 
 const App = () => {
     return (
-        <div className="h-screen bg-[#202124] text-white">
+        <div className="flex h-screen w-screen flex-col bg-[#202124] text-white">
             <Header />
-            <div className="flex ">
+            <div className="flex h-full overflow-hidden">
                 <Sidebar />
                 <PageContainer>Hello</PageContainer>
             </div>
