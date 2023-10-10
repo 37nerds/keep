@@ -10,7 +10,7 @@ type TStore = {
 const useAuthStore = create<TStore>()(
     immer(
         devtools(set => ({
-            loggedUser: true,
+            loggedUser: false,
             setLoggedUser: user => {
                 set(state => {
                     state.loggedUser = user;
