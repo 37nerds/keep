@@ -1,4 +1,5 @@
 import type {
+    FC,
     ForwardRefExoticComponent,
     PropsWithoutRef,
     SVGProps,
@@ -14,3 +15,8 @@ export type TActiveTab =
     | "Edit labels"
     | "Archive"
     | "Trash";
+
+export type TRoute = {
+    path: string;
+    component: FC;
+};

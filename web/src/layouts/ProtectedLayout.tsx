@@ -1,10 +1,11 @@
-import PageContainer from "@/components/PageContainer";
-import useAuthStore from "@/states/auto_store";
 import { Navigate, Outlet } from "react-router-dom";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
 
-const PrivateLayout = () => {
+import PageContainer from "@/screens/protected_layout/PageContainer";
+import Header from "@/screens/protected_layout/Header";
+import useAuthStore from "@/states/auth_store";
+import Sidebar from "@/screens/protected_layout/Sidebar";
+
+const ProtectedLayout = () => {
     const { loggedUser } = useAuthStore();
 
     if (!loggedUser) {
@@ -24,4 +25,4 @@ const PrivateLayout = () => {
     );
 };
 
-export default PrivateLayout;
+export default ProtectedLayout;

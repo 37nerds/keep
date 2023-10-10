@@ -1,5 +1,5 @@
-import HeaderIcon from "@/components/HeaderIcon";
-import SearchInput from "@/components/SearchInput";
+import HeaderIcon from "@/screens/protected_layout/HeaderIcon";
+import SearchInput from "@/screens/protected_layout/SearchInput";
 import useLayoutStore from "@/states/layout_store";
 import ArrowPathIcon from "@heroicons/react/24/outline/ArrowPathIcon";
 import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
@@ -8,7 +8,7 @@ import QueueListIcon from "@heroicons/react/24/outline/QueueListIcon";
 import UserCircleIcon from "@heroicons/react/24/outline/UserCircleIcon";
 
 const Header = () => {
-    const {toggleSidebarCollapse} = useLayoutStore(state => state)
+    const { toggleSidebarCollapse } = useLayoutStore(state => state);
     return (
         <nav className="flex items-center justify-between border-b border-[#5f6367] px-5 py-2">
             <div className="flex items-center gap-4">

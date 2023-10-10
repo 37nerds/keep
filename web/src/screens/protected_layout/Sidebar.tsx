@@ -5,7 +5,7 @@ import BellIcon from "@heroicons/react/24/outline/BellIcon";
 import LightBulbIcon from "@heroicons/react/24/outline/LightBulbIcon";
 import PencilIcon from "@heroicons/react/24/outline/PencilIcon";
 import TrashIcon from "@heroicons/react/24/outline/TrashIcon";
-import SidebarItem from "@/components/SidebarItem";
+import SidebarItem from "@/screens/protected_layout/SidebarItem";
 import useLayoutStore from "@/states/layout_store";
 
 const Sidebar = () => {
