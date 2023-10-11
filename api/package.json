@@ -1,23 +1,46 @@
 {
-  "engines": {
-    "node": ">=18.16.1"
-  },
-  "main": "src/main.ts",
-  "scripts": {
-    "compile": "tsc",
-    "start": "node ./dist/main.js",
-    "dev": "nodemon ./src/main.ts"
-  },
-  "author": "37nerds<37nerds@gmail.com>",
-  "license": "MIT",
-  "dependencies": {
-    "koa": "^2.14.2"
-  },
-  "devDependencies": {
-    "@types/koa": "^2.13.9",
-    "@types/node": "^20.8.0",
-    "nodemon": "^3.0.1",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
-  }
+    "engines": {
+        "node": ">=18.16.1"
+    },
+    "main": "src/main.ts",
+    "scripts": {
+        "compile": "tsc",
+        "start": "node ./dist/main.js",
+        "dev": "nodemon ./src/main.ts",
+        "format": "prettier . --write"
+    },
+    "author": "Shihab Mahamud<shihab4t@gmail.com>",
+    "license": "MIT",
+    "dependencies": {
+        "@koa/router": "^12.0.0",
+        "dotenv": "^16.3.1",
+        "koa": "^2.14.2",
+        "koa-bodyparser": "^4.4.1",
+        "koa-cors": "^0.0.16",
+        "koa-json": "^2.0.2",
+        "koa-logger": "^3.2.1",
+        "koa-morgan": "^1.0.1",
+        "koa-mount": "^4.0.0",
+        "koa-static": "^5.0.0",
+        "mongodb": "^6.1.0",
+        "uuid": "^9.0.1",
+        "winston": "^3.11.0"
+    },
+    "devDependencies": {
+        "@types/koa": "^2.13.9",
+        "@types/koa-bodyparser": "^4.3.10",
+        "@types/koa-cors": "^0.0.3",
+        "@types/koa-json": "^2.0.21",
+        "@types/koa-logger": "^3.1.3",
+        "@types/koa-morgan": "^1.0.6",
+        "@types/koa-mount": "^4.0.3",
+        "@types/koa-static": "^4.0.2",
+        "@types/koa__router": "^12.0.1",
+        "@types/node": "^20.8.0",
+        "@types/uuid": "^9.0.5",
+        "nodemon": "^3.0.1",
+        "prettier": "^3.0.3",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.2.2"
+    }
 }
