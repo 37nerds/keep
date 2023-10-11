@@ -1,18 +1,15 @@
 import "dotenv/config";
 
-import * as uuid from "uuid";
-
 import Koa from "koa";
 import koaLogger from "koa-logger";
 import koaJson from "koa-json";
-import koaCors from "koa-cors";
-import koaBodyparser from "koa-bodyparser";
+import koaCors from "@koa/cors";
+import koaBodyparser from "@koa/bodyparser";
 import koaStatic from "koa-static";
 import koaMount from "koa-mount";
 
 import generateRequestId from "./middlewares/generate_request_id";
 import mongodb from "./helpers/mongodb";
-import Router from "@koa/router";
 
 declare module "koa" {
     interface Request {
