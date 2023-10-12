@@ -10,10 +10,14 @@ import koaMount from "koa-mount";
 
 import generateRequestId from "./middlewares/generate_request_id";
 import mongodb from "./helpers/mongodb";
+import type { Db } from "mongodb";
 
 declare module "koa" {
     interface Request {
         id: string;
+    }
+    interface Context {
+        db: Db;
     }
 }
 
