@@ -1,22 +1,25 @@
 import type { Context } from "koa";
-import usersRepo from "./repository";
+import { ValidationError } from "../../helpers/errors";
 import validate from "../../helpers/validate";
+import usersRepo from "./repository";
 import {
     TInsertUser,
     TUpdateUser,
     insertUserSchema,
     updateUserSchema,
 } from "./requests";
-import { ValidationError } from "../../helpers/errors";
 
 const index = async (ctx: Context) => {
     const { id } = ctx.request.query || {};
+    console.log(id);
     if (id) {
+        console.log("here", id);
         const user = await usersRepo.find(ctx.db, id as string);
         ctx.body = user;
         return;
     }
     const users = await usersRepo.finds(ctx.db);
+    console.log("here2", users);
     ctx.body = users;
 };
 
