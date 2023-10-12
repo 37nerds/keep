@@ -1,7 +1,7 @@
 {
     "engines": {
         "node": ">=18.16.1",
-        "pnpm": ">=8.9.0"
+        "pnpm": ">=8.7.6"
     },
     "main": "src/main.ts",
     "scripts": {
@@ -25,7 +25,8 @@
         "koa-static": "^5.0.0",
         "mongodb": "^6.1.0",
         "uuid": "^9.0.1",
-        "winston": "^3.11.0"
+        "winston": "^3.11.0",
+        "zod": "^3.22.4"
     },
     "devDependencies": {
         "@types/koa": "^2.13.9",
