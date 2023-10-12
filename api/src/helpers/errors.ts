@@ -22,3 +22,17 @@ export class ServerSideError extends HttpError {
         this.name = "Server Side Error";
     }
 }
+
+export class UnknownError extends HttpError {
+    constructor(message: string) {
+        super(message, 500);
+        this.name = "Unknown Error";
+    }
+}
+
+export class ValidationError extends HttpError {
+    constructor(message: string) {
+        super(message, 400);
+        this.name = "Validation Error";
+    }
+}
