@@ -23,6 +23,13 @@ export class ServerSideError extends HttpError {
     }
 }
 
+export class DatabaseError extends HttpError {
+    constructor(message: string) {
+        super(message, 500);
+        this.name = "Database Error";
+    }
+}
+
 export class UnknownError extends HttpError {
     constructor(message: string) {
         super(message, 500);
