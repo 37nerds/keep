@@ -11,7 +11,6 @@ export const insertUserSchema = z.object({
 });
 
 export const updateUserSchema = z.object({
-    _id: z.string().length(24),
     username: z.string().optional(),
     email: z.string().optional(),
     password: z.string().optional(),
