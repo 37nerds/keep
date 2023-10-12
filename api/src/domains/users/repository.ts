@@ -1,17 +1,6 @@
 import { NotFoundError, ServerSideError } from "../../helpers/errors";
 import { Db, ObjectId } from "mongodb";
-
-export type TStatus = "active" | "inactive";
-
-export type TInsertUser = {
-    username: string;
-    email: string;
-    password: string;
-    name?: string;
-    status?: TStatus;
-};
-
-export type TUpdateUser = Partial<TInsertUser>;
+import { TInsertUser, TUpdateUser } from "./requests";
 
 export type TUser = TInsertUser & {
     _id: ObjectId;
