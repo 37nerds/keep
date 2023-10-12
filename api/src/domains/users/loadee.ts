@@ -1,7 +1,7 @@
 import Koa from "koa";
 import Router from "@koa/router";
 import handlers from "./handlers";
-import eh from "helpers/error_handler";
+import eh from "../../helpers/error_handler";
 
 export default (app: Koa) => {
     const router = new Router({
