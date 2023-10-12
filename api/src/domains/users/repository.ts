@@ -52,12 +52,12 @@ const insert = async (db: Db, doc: TInsertUser): Promise<TUser | null> => {
     return saveDoc as TUser;
 };
 
-const update = async (db: Db, doc: TUpdateUser): Promise<TUser | null> => {
+const update = async (db: Db, userId: string, doc: TUpdateUser): Promise<TUser | null> => {
     const usersCollection = db.collection("users");
 
     let id: ObjectId;
     try {
-        id = new ObjectId(doc._id);
+        id = new ObjectId(userId);
     } catch (e: any) {
         throw new ServerSideError(e.message);
     }
