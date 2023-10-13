@@ -8,8 +8,8 @@ import koaBodyparser from "@koa/bodyparser";
 import koaStatic from "koa-static";
 import koaMount from "koa-mount";
 
-import generateRequestId from "./middlewares/generate_request_id";
-import mongodb from "./base/mongodb";
+import generateRequestId from "@middlewares/generate_request_id";
+import mongodb from "@base/mongodb";
 
 declare module "koa" {
     interface Context {

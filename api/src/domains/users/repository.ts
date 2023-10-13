@@ -3,7 +3,7 @@ import type { Db } from "mongodb";
 
 import { ObjectId } from "mongodb";
 
-import repository from "../../base/repository";
+import repository from "@base/repository";
 
 export type TUser = TInsertUser & {
     _id: ObjectId;
