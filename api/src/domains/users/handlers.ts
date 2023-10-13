@@ -1,7 +1,7 @@
 import type { Context } from "koa";
 import type { TInsertUser, TUpdateUser } from "./schemas";
 
-import { ValidationError } from "../../base/errors";
+import { ValidationError } from "@base/errors";
 
 import usersRepo from "./repository";
 

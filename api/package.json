@@ -5,9 +5,9 @@
     },
     "main": "src/main.ts",
     "scripts": {
-        "compile": "tsc",
-        "start": "node ./dist/main.js",
-        "dev": "nodemon ./src/main.ts",
+        "build": "tsc",
+        "start": "TS_NODE_BASEURL='./dist' node -r tsconfig-paths/register ./dist/main.js",
+        "dev": "nodemon -r tsconfig-paths/register ./src/main.ts",
         "format": "prettier . --write"
     },
     "author": "Shihab Mahamud<shihab4t@gmail.com>",
@@ -42,6 +42,7 @@
         "nodemon": "^3.0.1",
         "prettier": "^3.0.3",
         "ts-node": "^10.9.1",
+        "tsconfig-paths": "^4.2.0",
         "typescript": "^5.2.2"
     }
 }
