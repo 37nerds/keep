@@ -1,13 +1,18 @@
 import type { Context, Next } from "koa";
-import type { Schema } from "zod";
 
 import { z } from "zod";
 import { UnknownError, ValidationError } from "@base/errors";
+import { TSchema } from "@base/types";
 
-const validate = <T>(schema: Schema<T>) => {
+const validate = <T, T2>(schema: TSchema) => {
     return (ctx: Context, next: Next) => {
         try {
-            ctx.request.body = schema.parse(ctx.request.body);
+            if (schema.body) {
+                ctx.request.body = schema.body.parse(ctx.request.body) as T2;
+            }
+            if (schema.query) {
+                ctx.request.query = schema.query.parse(ctx.request.query as T)
+            }
             return next();
         } catch (e: any) {
             if (e instanceof z.ZodError) {
