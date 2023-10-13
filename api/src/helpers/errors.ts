@@ -23,6 +23,13 @@ export class ServerSideError extends HttpError {
     }
 }
 
+export class ProcessingError extends HttpError {
+    constructor(message: string) {
+        super(message, 500);
+        this.name = "Processing Error";
+    }
+}
+
 export class DatabaseError extends HttpError {
     constructor(message: string) {
         super(message, 500);
