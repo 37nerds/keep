@@ -1,17 +1,18 @@
 {
-    "engines": {
-        "node": ">=18.16.1",
-        "pnpm": ">=8.7.6"
-    },
-    "main": "src/main.ts",
+    "license": "MIT",
+    "author": "Shihab Mahamud<shihab4t@gmail.com>",
+    "type": "commonjs",
+    "main": "dist/main.js",
     "scripts": {
         "build": "tsc",
         "start": "TS_NODE_BASEURL='./dist' node -r tsconfig-paths/register ./dist/main.js",
         "dev": "nodemon -r tsconfig-paths/register ./src/main.ts",
         "format": "prettier . --write"
     },
-    "author": "Shihab Mahamud<shihab4t@gmail.com>",
-    "license": "MIT",
+    "engines": {
+        "node": ">=18.16.1",
+        "pnpm": ">=8.7.6"
+    },
     "dependencies": {
         "@koa/bodyparser": "^5.0.0",
         "@koa/cors": "^4.0.0",
