@@ -1,6 +1,9 @@
-import { Db, ObjectId } from "mongodb";
+import type { TInsertUser, TUpdateUser } from "./schemas";
+import type { Db } from "mongodb";
+
+import { ObjectId } from "mongodb";
+
 import repository from "../../base/repository";
-import { TInsertUser, TUpdateUser } from "./requests";
 
 export type TUser = TInsertUser & {
     _id: ObjectId;
