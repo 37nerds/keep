@@ -6,35 +6,20 @@ import {
 import { Db, ObjectId } from "mongodb";
 import { TInsertUser, TUpdateUser } from "./requests";
 import { warn } from "console";
+import repository from "../../base/repository";
 
 export type TUser = TInsertUser & {
     _id: ObjectId;
 };
 
-const finds = async (db: Db): Promise<TUser[] | null> => {
-    const usersCollection = db.collection("users");
+export const USERS = "users";
 
-    const users = await usersCollection.find().toArray();
-
-    return users as TUser[];
-};
+const finds = async (db: Db): Promise<TUser[]> => {
+    return repository.finds<TUser>(db, USERS)
+;
 
 const find = async (db: Db, userId: string): Promise<TUser> => {
-    const usersCollection = db.collection("users");
-
-    let id: ObjectId;
-    try {
-        id = new ObjectId(userId);
-    } catch (e: any) {
-        throw new ServerSideError(e.message);
-    }
-
-    const user = await usersCollection.findOne({ _id: id });
-    if (!user) {
-        throw new NotFoundError("user not found");
-    }
-
-    return user as TUser;
+    return repository.find<TUser>(db, USERS, userId);
 };
 
 const insert = async (db: Db, doc: TInsertUser): Promise<TUser | null> => {
@@ -52,7 +37,11 @@ const insert = async (db: Db, doc: TInsertUser): Promise<TUser | null> => {
     return saveDoc as TUser;
 };
 
-const update = async (db: Db, userId: string, doc: TUpdateUser): Promise<TUser | null> => {
+const update = async (
+    db: Db,
+    userId: string,
+    doc: TUpdateUser,
+): Promise<TUser | null> => {
     const usersCollection = db.collection("users");
 
     let id: ObjectId;
