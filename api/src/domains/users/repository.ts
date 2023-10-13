@@ -1,12 +1,6 @@
-import {
-    DatabaseError,
-    NotFoundError,
-    ServerSideError,
-} from "../../helpers/errors";
 import { Db, ObjectId } from "mongodb";
-import { TInsertUser, TUpdateUser } from "./requests";
-import { warn } from "console";
 import repository from "../../base/repository";
+import { TInsertUser, TUpdateUser } from "./requests";
 
 export type TUser = TInsertUser & {
     _id: ObjectId;
@@ -15,26 +9,15 @@ export type TUser = TInsertUser & {
 export const USERS = "users";
 
 const finds = async (db: Db): Promise<TUser[]> => {
-    return repository.finds<TUser>(db, USERS)
-;
+    return repository.finds<TUser>(db, USERS);
+};
 
 const find = async (db: Db, userId: string): Promise<TUser> => {
     return repository.find<TUser>(db, USERS, userId);
 };
 
-const insert = async (db: Db, doc: TInsertUser): Promise<TUser | null> => {
-    const usersCollection = db.collection("users");
-
-    const result = await usersCollection.insertOne(doc);
-
-    const saveDoc = await usersCollection.findOne({
-        _id: result.insertedId,
-    });
-    if (!saveDoc) {
-        throw new NotFoundError("user not found");
-    }
-
-    return saveDoc as TUser;
+const insert = async (db: Db, doc: TInsertUser): Promise<TUser> => {
+    return repository.insert<TInsertUser, TUser>(db, USERS, doc);
 };
 
 const update = async (
@@ -42,43 +25,11 @@ const update = async (
     userId: string,
     doc: TUpdateUser,
 ): Promise<TUser | null> => {
-    const usersCollection = db.collection("users");
-
-    let id: ObjectId;
-    try {
-        id = new ObjectId(userId);
-    } catch (e: any) {
-        throw new ServerSideError(e.message);
-    }
-
-    const result = await usersCollection.updateOne({ _id: id }, { $set: doc });
-    if (result.matchedCount === 0) {
-        throw new DatabaseError("failed to update user");
-    }
-
-    const updatedDoc = await usersCollection.findOne({ _id: id });
-    if (!updatedDoc) {
-        throw new NotFoundError("user not found");
-    }
-
-    return updatedDoc as TUser;
+    return repository.update<TUpdateUser, TUser>(db, USERS, userId, doc);
 };
 
 const destroy = async (db: Db, userId: string): Promise<void> => {
-    const usersCollection = db.collection("users");
-
-    let id: ObjectId;
-    try {
-        id = new ObjectId(userId);
-    } catch (e: any) {
-        throw new ServerSideError(e.message);
-    }
-
-    const result = await usersCollection.deleteOne({ _id: id });
-
-    if (result.deletedCount !== 1) {
-        throw new DatabaseError("failed to delete user");
-    }
+    return repository.destroy(db, USERS, userId);
 };
 
 const usersRepo = { insert, update, find, finds, destroy };
