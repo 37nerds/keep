@@ -2,7 +2,7 @@ import type { Context, Next } from "koa";
 import type { Schema } from "zod";
 
 import { z } from "zod";
-import { UnknownError, ValidationError } from "../base/errors";
+import { UnknownError, ValidationError } from "@base/errors";
 
 const validate = <T>(schema: Schema<T>) => {
     return (ctx: Context, next: Next) => {

@@ -4,8 +4,8 @@ import { insertUserSchema, updateUserSchema } from "./schemas";
 
 import Router from "@koa/router";
 import Koa from "koa";
-import eh from "../../base/error_handler";
-import validate from "../../middlewares/validate";
+import eh from "@base/error_handler";
+import validate from "@middlewares/validate";
 import handlers from "./handlers";
 
 export default (app: Koa) => {
