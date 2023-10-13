@@ -45,8 +45,10 @@ export class UnknownError extends HttpError {
 }
 
 export class ValidationError extends HttpError {
-    constructor(message: string) {
+    errors?: string;
+    constructor(message: string, errors?: string) {
         super(message, 400);
         this.name = "Validation Error";
+        this.errors = errors || "";
     }
 }
