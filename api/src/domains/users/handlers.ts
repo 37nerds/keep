@@ -5,7 +5,6 @@ import { ValidationError } from "../../base/errors";
 
 import usersRepo from "./repository";
 
-
 const index = async (ctx: Context) => {
     const { id } = ctx.request.query || {};
     if (id) {
@@ -20,7 +19,7 @@ const index = async (ctx: Context) => {
 };
 
 const save = async (ctx: Context) => {
-    const user = await usersRepo.insert(ctx.db, ctx.body as TInsertUser);
+    const user = await usersRepo.insert(ctx.db, ctx.request.body as TInsertUser);
     ctx.status = 201;
     ctx.body = user;
 };
@@ -30,7 +29,11 @@ const update = async (ctx: Context) => {
     if (!id) {
         throw new ValidationError("id is not found query string");
     }
-    const user = await usersRepo.update(ctx.db, id as string, ctx.body as TUpdateUser);
+    const user = await usersRepo.update(
+        ctx.db,
+        id as string,
+        ctx.request.body as TUpdateUser,
+    );
     ctx.status = 200;
     ctx.body = user;
 };
