@@ -4,9 +4,8 @@ import { HttpError, UnknownError } from "./errors";
 const eh = <T>(func: (ctx: Context, next: Next) => Promise<T>) => {
     return async (ctx: Context, next: Next) => {
         try {
-            return func(ctx, next);
+            return await func(ctx, next);
         } catch (e: any) {
-            console.log(e);
             let error = e;
             if (!(e instanceof HttpError)) {
                 error = new UnknownError(e?.message || "");
