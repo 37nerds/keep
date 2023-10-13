@@ -1,5 +1,5 @@
-import type { Schema } from "zod";
 import type { Context, Next } from "koa";
+import type { Schema } from "zod";
 
 import { z } from "zod";
 import { UnknownError, ValidationError } from "../base/errors";
@@ -7,7 +7,7 @@ import { UnknownError, ValidationError } from "../base/errors";
 const validate = <T>(schema: Schema<T>) => {
     return (ctx: Context, next: Next) => {
         try {
-            ctx.body = schema.parse(ctx.body);
+            ctx.request.body = schema.parse(ctx.request.body);
             return next();
         } catch (e: any) {
             if (e instanceof z.ZodError) {

@@ -1,8 +1,4 @@
-import {
-    DatabaseError,
-    NotFoundError,
-    ProcessingError,
-} from "./errors";
+import { DatabaseError, NotFoundError, ProcessingError } from "./errors";
 
 import type { Db, OptionalId } from "mongodb";
 
@@ -31,11 +27,7 @@ const find = async <T>(db: Db, collection: string, _id: string): Promise<T> => {
     return item as T;
 };
 
-const insert = async <T, T2>(
-    db: Db,
-    collection: string,
-    doc: T,
-): Promise<T2> => {
+const insert = async <T, T2>(db: Db, collection: string, doc: T): Promise<T2> => {
     const c = db.collection(collection);
     const r = await c.insertOne(doc as OptionalId<T>);
     const saveDoc = await c.findOne({
@@ -61,11 +53,7 @@ const update = async <T, T2>(
     return find<T2>(db, collection, _id);
 };
 
-const destroy = async (
-    db: Db,
-    collection: string,
-    _id: string,
-): Promise<void> => {
+const destroy = async (db: Db, collection: string, _id: string): Promise<void> => {
     const c = db.collection(collection);
     const r = await c.deleteOne({ _id: toObjectId(_id) });
     if (r.deletedCount !== 1) {

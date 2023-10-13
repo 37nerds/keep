@@ -2,11 +2,11 @@ import type { TInsertUser, TUpdateUser } from "./schemas";
 
 import { insertUserSchema, updateUserSchema } from "./schemas";
 
-import Koa from "koa";
 import Router from "@koa/router";
-import handlers from "./handlers";
+import Koa from "koa";
 import eh from "../../base/error_handler";
-import validate from "middlewares/validate";
+import validate from "../../middlewares/validate";
+import handlers from "./handlers";
 
 export default (app: Koa) => {
     const router = new Router({
