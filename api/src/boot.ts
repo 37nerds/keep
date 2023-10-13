@@ -32,10 +32,6 @@ const loadMiddlewares = (app: Koa) => {
 const boot = async (domains: string[]) => {
     const app = new Koa();
 
-    app.on("error", (err, ctx) => {
-        console.log("server error", err);
-    });
-
     loadMiddlewares(app);
 
     app.context.db = await mongodb();
