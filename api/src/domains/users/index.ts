@@ -1,6 +1,6 @@
-import type { TInsertUser, TUpdateUser } from "./schemas";
+import type { TUpdateUserQuery, TInsertUserBody, TUpdateUserBody, TDeleteUserQuery } from "./schemas";
 
-import { insertUserSchema, updateUserSchema } from "./schemas";
+import { postUserSchema, patchUserSchema, TGetUserQuery, getUserSchema, deleteUserSchema } from "./schemas";
 
 import Router from "@koa/router";
 import Koa from "koa";
@@ -13,10 +13,10 @@ export default (app: Koa) => {
         prefix: "/api/v1/users",
     });
 
-    router.get("/", eh(handlers.index));
-    router.post("/", validate<TInsertUser>(insertUserSchema), eh(handlers.save));
-    router.patch("/", validate<TUpdateUser>(updateUserSchema), eh(handlers.update));
-    router.delete("/", eh(handlers.destroy));
+    router.get("/", validate<TGetUserQuery, null>(getUserSchema), eh(handlers.index));
+    router.post("/", validate<null, TInsertUserBody>(postUserSchema), eh(handlers.save));
+    router.patch("/", validate<TUpdateUserQuery, TUpdateUserBody>(patchUserSchema), eh(handlers.update));
+    router.delete("/", validate<TDeleteUserQuery, null>(deleteUserSchema), eh(handlers.destroy));
 
     app.use(router.routes());
     app.use(router.allowedMethods());

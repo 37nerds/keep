@@ -1,5 +1,5 @@
 import type { Context } from "koa";
-import type { TInsertUser, TUpdateUser } from "./schemas";
+import type { TInsertUserBody, TUpdateUserBody } from "./schemas";
 
 import { ValidationError } from "@base/errors";
 
@@ -19,7 +19,7 @@ const index = async (ctx: Context) => {
 };
 
 const save = async (ctx: Context) => {
-    const user = await usersRepo.insert(ctx.db, ctx.request.body as TInsertUser);
+    const user = await usersRepo.insert(ctx.db, ctx.request.body as TInsertUserBody);
     ctx.status = 201;
     ctx.body = user;
 };
@@ -29,11 +29,7 @@ const update = async (ctx: Context) => {
     if (!id) {
         throw new ValidationError("id is not found query string");
     }
-    const user = await usersRepo.update(
-        ctx.db,
-        id as string,
-        ctx.request.body as TUpdateUser,
-    );
+    const user = await usersRepo.update(ctx.db, id as string, ctx.request.body as TUpdateUserBody);
     ctx.status = 200;
     ctx.body = user;
 };
