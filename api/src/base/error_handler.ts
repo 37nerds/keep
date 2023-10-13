@@ -1,22 +1,23 @@
 import { Context, Next } from "koa";
 import { HttpError, UnknownError } from "./errors";
+import { isDev } from "@helpers/config";
 
 const eh = <T>(func: (ctx: Context, next: Next) => Promise<T>) => {
     return async (ctx: Context, next: Next) => {
         try {
-            return func(ctx, next);
+            return await func(ctx, next);
         } catch (e: any) {
-            console.log(e);
             let error = e;
             if (!(e instanceof HttpError)) {
                 error = new UnknownError(e?.message || "");
             }
             ctx.status = error.status;
             ctx.body = {
+                request_id: ctx.request.id,
                 name: error.name,
                 message: error.message,
-                // errors: error?.errors ? JSON.parse(error.errors) : null,
-                stack: error.stack,
+                errors: error?.errors ? JSON.parse(error.errors) : undefined,
+                stack: isDev() ? error.stack : undefined,
             };
         }
     };
