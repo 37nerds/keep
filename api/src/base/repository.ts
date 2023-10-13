@@ -2,8 +2,7 @@ import {
     DatabaseError,
     NotFoundError,
     ProcessingError,
-    ServerSideError,
-} from "../helpers/errors";
+} from "./errors";
 
 import type { Db, OptionalId } from "mongodb";
 

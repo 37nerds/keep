@@ -1,13 +1,10 @@
 import type { Context } from "koa";
-import { ValidationError } from "../../helpers/errors";
-import validate from "../../helpers/validate";
+import type { TInsertUser, TUpdateUser } from "./schemas";
+
+import { ValidationError } from "../../base/errors";
+
 import usersRepo from "./repository";
-import {
-    TInsertUser,
-    TUpdateUser,
-    insertUserSchema,
-    updateUserSchema,
-} from "./requests";
+
 
 const index = async (ctx: Context) => {
     const { id } = ctx.request.query || {};
@@ -23,8 +20,7 @@ const index = async (ctx: Context) => {
 };
 
 const save = async (ctx: Context) => {
-    const payload = validate<TInsertUser>(insertUserSchema, ctx.request.body);
-    const user = await usersRepo.insert(ctx.db, payload);
+    const user = await usersRepo.insert(ctx.db, ctx.body as TInsertUser);
     ctx.status = 201;
     ctx.body = user;
 };
@@ -34,8 +30,7 @@ const update = async (ctx: Context) => {
     if (!id) {
         throw new ValidationError("id is not found query string");
     }
-    const payload = validate<TUpdateUser>(updateUserSchema, ctx.request.body);
-    const user = await usersRepo.update(ctx.db, id as string, payload);
+    const user = await usersRepo.update(ctx.db, id as string, ctx.body as TUpdateUser);
     ctx.status = 200;
     ctx.body = user;
 };
