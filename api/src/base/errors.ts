@@ -1,8 +1,8 @@
-import { TStatusCode } from "./types";
+import { TStatus } from "./types";
 
 export class HttpError extends Error {
-    status: TStatusCode;
-    constructor(message: string, status: TStatusCode) {
+    status: TStatus;
+    constructor(message: string, status: TStatus) {
         super(message);
         this.name = "Http Error";
         this.status = status;

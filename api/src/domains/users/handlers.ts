@@ -1,50 +1,52 @@
 import type { Context } from "koa";
-import type { TInsertUserBody, TUpdateUserBody } from "./schemas";
+import type { TInsertUserBody, TRegisterUserBody, TUpdateUserBody } from "./schemas";
 
 import { ValidationError } from "@base/errors";
 
 import usersRepo from "./repository";
+import jwt from "@helpers/jwt";
+import { loginUser } from "./logic";
+import { reply } from "@helpers/reply";
 
-const index = async (ctx: Context) => {
+export const index = async (ctx: Context) => {
     const { id } = ctx.request.query || {};
     if (id) {
         const user = await usersRepo.find(ctx.db, id as string);
-        ctx.status = 200;
-        ctx.body = user;
-        return;
+        return reply(ctx, 200, user);
     }
     const users = await usersRepo.finds(ctx.db);
-    ctx.status = 200;
-    ctx.body = users;
+    return reply(ctx, 200, users);
 };
 
-const save = async (ctx: Context) => {
+export const save = async (ctx: Context) => {
     const user = await usersRepo.insert(ctx.db, ctx.request.body as TInsertUserBody);
-    ctx.status = 201;
-    ctx.body = user;
+    return reply(ctx, 201, user);
 };
 
-const update = async (ctx: Context) => {
+export const update = async (ctx: Context) => {
     const { id } = ctx.request.query || {};
-    if (!id) {
-        throw new ValidationError("id is not found query string");
-    }
     const user = await usersRepo.update(ctx.db, id as string, ctx.request.body as TUpdateUserBody);
-    ctx.status = 200;
-    ctx.body = user;
+    return reply(ctx, 200, user);
 };
 
-const destroy = async (ctx: Context) => {
+export const destroy = async (ctx: Context) => {
     const { id } = ctx.request.query || {};
-    if (!id) {
-        throw new ValidationError("id is not found query string");
-    }
-    const user = await usersRepo.destroy(ctx.db, id as string);
-    ctx.status = 204;
-    ctx.body = user;
-    return;
+    await usersRepo.destroy(ctx.db, id as string);
+    return reply(ctx, 204);
 };
 
-const handlers = { index, save, update, destroy };
+export const login = async (ctx: Context) => {};
 
-export default handlers;
+export const register = async (ctx: Context) => {
+    const user = await usersRepo.insert(ctx.db, ctx.request.body as TRegisterUserBody);
+    loginUser(ctx, user);
+    return reply(ctx, 201, user);
+};
+
+export const profile = async (ctx: Context) => {};
+
+export const forgotPassword = async (ctx: Context) => {};
+
+export const resetPassword = async (ctx: Context) => {};
+
+export const changePassword = async (ctx: Context) => {};

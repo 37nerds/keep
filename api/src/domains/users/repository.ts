@@ -31,7 +31,7 @@ const insert = async (db: Db, doc: TInsertUserBody): Promise<TUser> => {
     return repository.insert<TInsertUserBody, TUser>(db, USERS, doc);
 };
 
-const update = async (db: Db, userId: string, doc: TUpdateUserBody): Promise<TUser | null> => {
+const update = async (db: Db, userId: string, doc: TUpdateUserBody): Promise<TUser> => {
     return repository.update<TUpdateUserBody, TUser>(db, USERS, userId, doc);
 };
 
