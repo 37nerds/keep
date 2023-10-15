@@ -1,7 +1,7 @@
 import type { TInsertUserBody, TUpdateUserBody } from "./schemas";
 import type { Db } from "mongodb";
 
-import { ObjectId } from "mongodb";
+import { ObjectId, Document, Filter } from "mongodb";
 
 import repository from "@base/repository";
 import emitter from "@base/emitter";
@@ -23,15 +23,19 @@ const finds = async (db: Db): Promise<TUser[]> => {
     return users;
 };
 
-const find = async (db: Db, userId: string): Promise<TUser> => {
-    return repository.find<TUser>(db, USERS, userId);
+const find = async (filter: Filter<Document>) => {
+    return repository.find<TUser>(USERS, filter);
 };
 
-const insert = async (db: Db, doc: TInsertUserBody): Promise<TUser> => {
-    return repository.insert<TInsertUserBody, TUser>(db, USERS, doc);
+const findById = async (userId: string): Promise<TUser> => {
+    return repository.find<TUser>(USERS, userId);
 };
 
-const update = async (db: Db, userId: string, doc: TUpdateUserBody): Promise<TUser | null> => {
+const insert = async (doc: TInsertUserBody): Promise<TUser> => {
+    return repository.insert<TInsertUserBody, TUser>(USERS, doc);
+};
+
+const update = async (db: Db, userId: string, doc: TUpdateUserBody): Promise<TUser> => {
     return repository.update<TUpdateUserBody, TUser>(db, USERS, userId, doc);
 };
 
@@ -39,6 +43,6 @@ const destroy = async (db: Db, userId: string): Promise<void> => {
     return repository.destroy(db, USERS, userId);
 };
 
-const usersRepo = { insert, update, find, finds, destroy };
+const usersRepo = { insert, update, findById, find, finds, destroy };
 
 export default usersRepo;
