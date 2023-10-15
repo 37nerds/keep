@@ -1,7 +1,18 @@
-import type { TSchema } from "@base/types";
-import { warn } from "console";
-
+import { TSchema } from "@base/types";
 import { z } from "zod";
+
+const registerUserBodySchema = z.object({
+    username: z.string(),
+    email: z.string(),
+    password: z.string(),
+    name: z.string().optional(),
+});
+
+export const registerUserSchema: TSchema = {
+    body: registerUserBodySchema,
+};
+
+export type TRegisterUserBody = z.infer<typeof registerUserBodySchema>;
 
 const userStatusSchema = z.enum(["active", "inactive"]);
 
@@ -14,13 +25,6 @@ const loginUserBodySchema = z
     .refine((data) => data.username || data.email, {
         message: "Either 'username' or 'email' is required.",
     });
-
-const registerUserBodySchema = z.object({
-    username: z.string(),
-    email: z.string(),
-    password: z.string(),
-    name: z.string().optional(),
-});
 
 const postUserBodySchema = registerUserBodySchema.merge(
     z.object({
@@ -63,10 +67,6 @@ export const deleteUserSchema: TSchema = {
     query: patchUpdateQuerySchema,
 };
 
-export const registerUserSchema: TSchema = {
-    body: registerUserBodySchema,
-};
-
 export const loginUserSchema: TSchema = {
     body: loginUserBodySchema,
 };
@@ -77,5 +77,4 @@ export type TUpdateUserBody = z.infer<typeof patchUpdateBodySchema>;
 export type TUpdateUserQuery = z.infer<typeof patchUpdateQuerySchema>;
 export type TGetUserQuery = z.infer<typeof getUserQuerySchema>;
 export type TDeleteUserQuery = z.infer<typeof patchUpdateQuerySchema>;
-export type TRegisterUserBody = z.infer<typeof registerUserBodySchema>;
 export type TLoginUserBody = z.infer<typeof loginUserBodySchema>;

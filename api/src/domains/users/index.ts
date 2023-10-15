@@ -40,8 +40,8 @@ export default (app: Koa) => {
         prefix: "/api/v1/users",
     });
 
-    router.post("/login", validate<null, TLoginUserBody>(loginUserSchema), eh(login));
     router.post("/register", validate<null, TRegisterUserBody>(registerUserSchema), eh(register));
+    router.post("/login", validate<null, TLoginUserBody>(loginUserSchema), eh(login));
     router.post("/forgot-password", eh(forgotPassword));
     router.post("/reset-password", eh(resetPassword));
     router.post("/change-password", eh(changePassword));

@@ -1,17 +1,53 @@
-import type { Context } from "koa";
-import type { TInsertUserBody, TRegisterUserBody, TUpdateUserBody } from "./schemas";
-
-import { ValidationError } from "@base/errors";
+import { Context } from "koa";
+import { TInsertUserBody, TRegisterUserBody, TUpdateUserBody } from "./schemas";
+import { BadRequestError, ValidationError } from "@base/errors";
+import { reply } from "@helpers/reply";
+import { hour } from "@helpers/time";
+import { TUser } from "./repository";
 
 import usersRepo from "./repository";
 import jwt from "@helpers/jwt";
-import { loginUser } from "./logic";
-import { reply } from "@helpers/reply";
+
+const AUTH_TOKEN = "auth_token";
+
+const loginUser = async (ctx: Context, user: TUser) => {
+    const expireInHours = 2;
+    const token = await jwt.generate({ username: user.username, email: user.email, name: user.name });
+    ctx.cookies.set(AUTH_TOKEN, token, {
+        httpOnly: true,
+        maxAge: hour * expireInHours,
+    });
+};
+
+export const register = async (ctx: Context) => {
+    const body = ctx.request.body as TRegisterUserBody;
+    const { username, email } = body;
+    let user: TUser | null;
+    try {
+        user = await usersRepo.find({ username });
+    } catch (e: any) {
+        user = null;
+    }
+    if (user) {
+        throw new BadRequestError("username already exits");
+    }
+    try {
+        user = await usersRepo.find({ email });
+    } catch (e: any) {
+        user = null;
+    }
+    if (user) {
+        throw new BadRequestError("email already exits");
+    }
+    user = await usersRepo.insert(body);
+    await loginUser(ctx, user);
+    return reply(ctx, 201, user);
+};
 
 export const index = async (ctx: Context) => {
     const { id } = ctx.request.query || {};
     if (id) {
-        const user = await usersRepo.find(ctx.db, id as string);
+        const user = await usersRepo.findById(id as string);
         return reply(ctx, 200, user);
     }
     const users = await usersRepo.finds(ctx.db);
@@ -19,7 +55,7 @@ export const index = async (ctx: Context) => {
 };
 
 export const save = async (ctx: Context) => {
-    const user = await usersRepo.insert(ctx.db, ctx.request.body as TInsertUserBody);
+    const user = await usersRepo.insert(ctx.request.body as TInsertUserBody);
     return reply(ctx, 201, user);
 };
 
@@ -36,12 +72,6 @@ export const destroy = async (ctx: Context) => {
 };
 
 export const login = async (ctx: Context) => {};
-
-export const register = async (ctx: Context) => {
-    const user = await usersRepo.insert(ctx.db, ctx.request.body as TRegisterUserBody);
-    loginUser(ctx, user);
-    return reply(ctx, 201, user);
-};
 
 export const profile = async (ctx: Context) => {};
 
