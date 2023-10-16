@@ -5,7 +5,7 @@ import { UseMutationResult, UseQueryResult } from "react-query";
 export const useMutationEH = <T, T2>(mutation: UseMutationResult<T, TError, T2>) => {
     useEffect(() => {
         if (mutation.isError) {
-            console.error("error", mutation.error?.message);
+            console.log(mutation.error?.message);
         }
     }, [mutation.isError]);
 };
@@ -13,7 +13,7 @@ export const useMutationEH = <T, T2>(mutation: UseMutationResult<T, TError, T2>)
 export const useQueryEH = <T>(query: UseQueryResult<T, TError>) => {
     useEffect(() => {
         if (query.isError) {
-            console.error("error", query.error?.message);
+            console.log(query.error?.message);
         }
     }, [query.isError]);
 };

@@ -14,6 +14,7 @@ import { TUser } from "./repository";
 
 import usersRepo from "./repository";
 import jwt from "@helpers/jwt";
+import crypto from "@helpers/crypto";
 
 export const AUTH_TOKEN = "auth_token";
 
@@ -53,27 +54,32 @@ export const register = async (ctx: Context) => {
     if (user) {
         throw new BadRequestError("email already exits");
     }
+
+    body.password = await crypto.hash(body.password);
+
     user = await usersRepo.insert(body);
     await loginUser(ctx, user);
-    return reply(ctx, 201, user);
+    return reply(ctx, 201, { ...user, password: undefined });
 };
 
 export const profile = async (ctx: Context) => {
-    ctx.body = ctx.user;
-    ctx.status = 200;
+    return reply(ctx, 200, { ...ctx.user, password: undefined });
 };
 
 export const login = async (ctx: Context) => {
     const body = ctx.request.body as TLoginUserBody;
-    const { username, email } = body || {};
+    const { username, email, password } = body || {};
     let user: TUser | null;
     if (username) {
         user = await usersRepo.find({ username });
     } else {
         user = await usersRepo.find({ email });
     }
+    if (!(await crypto.compare(user.password, password))) {
+        throw new BadRequestError("invalid credintails");
+    }
     await loginUser(ctx, user);
-    return reply(ctx, 200, user);
+    return reply(ctx, 200, { ...user, password: undefined });
 };
 
 export const index = async (ctx: Context) => {
