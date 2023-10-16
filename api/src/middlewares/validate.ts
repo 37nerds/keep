@@ -12,7 +12,7 @@ const validate = <T, T2>(schema: TSchema) => {
                 ctx.request.body = schema.body.parse(ctx.request.body) as T2;
             }
             if (schema.query) {
-                ctx.request.query = schema.query.parse(ctx.request.query as T)
+                ctx.request.query = schema.query.parse(ctx.request.query as T);
             }
             return next();
         } catch (e: any) {

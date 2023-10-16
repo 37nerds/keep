@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { useAuthStore } from "@/states/auth_store";
 
 import PageContainer from "@/screens/protected_layout/PageContainer";
 import Header from "@/screens/protected_layout/Header";
-import useAuthStore from "@/states/auth_store";
 import Sidebar from "@/screens/protected_layout/Sidebar";
 
 const ProtectedLayout = () => {

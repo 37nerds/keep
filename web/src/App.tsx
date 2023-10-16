@@ -1,11 +1,11 @@
-import type { TRoute } from "./types";
-
+import { TRoute } from "./types";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { guest_routes, protected_routes, public_routes } from "./config/routes";
+import { QueryClient, QueryClientProvider } from "react-query";
 
-import ProtectedLayout from "./layouts/ProtectedLayout";
-import GuestLayout from "./layouts/GuestLayout";
-import PublicLayout from "./layouts/PublicLayout";
+import ProtectedLayout from "@/layouts/ProtectedLayout";
+import GuestLayout from "@/layouts/GuestLayout";
+import PublicLayout from "@/layouts/PublicLayout";
 
 const renderRoutes = (routes: TRoute[]) => {
     return routes.map(({ path, component: Component }, index) => (
@@ -13,21 +13,19 @@ const renderRoutes = (routes: TRoute[]) => {
     ));
 };
 
+const queryClient = new QueryClient();
+
 const App = () => {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route element={<PublicLayout />}>
-                    {renderRoutes(public_routes)}
-                </Route>
-                <Route element={<ProtectedLayout />}>
-                    {renderRoutes(protected_routes)}
-                </Route>
-                <Route element={<GuestLayout />}>
-                    {renderRoutes(guest_routes)}
-                </Route>
-            </Routes>
-        </BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+            <BrowserRouter>
+                <Routes>
+                    <Route element={<PublicLayout />}>{renderRoutes(public_routes)}</Route>
+                    <Route element={<ProtectedLayout />}>{renderRoutes(protected_routes)}</Route>
+                    <Route element={<GuestLayout />}>{renderRoutes(guest_routes)}</Route>
+                </Routes>
+            </BrowserRouter>
+        </QueryClientProvider>
     );
 };
 

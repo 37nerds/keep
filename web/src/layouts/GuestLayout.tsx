@@ -1,6 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-
-import useAuthStore from "@/states/auth_store";
+import { useAuthStore } from "@/states/auth_store";
 
 const GuestLayout = () => {
     const { loggedUser } = useAuthStore();
@@ -9,12 +8,7 @@ const GuestLayout = () => {
         return <Navigate to="/" replace />;
     }
 
-    return (
-        <div>
-            <div>Guest Layout</div>
-            <Outlet />
-        </div>
-    );
+    return <Outlet />;
 };
 
 export default GuestLayout;
