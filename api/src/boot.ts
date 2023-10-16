@@ -22,7 +22,11 @@ declare module "koa" {
 
 const loadMiddlewares = (app: Koa) => {
     app.use(koaBodyparser());
-    app.use(koaCors());
+    app.use(
+        koaCors({
+            credentials: true,
+        }),
+    );
     app.use(koaLogger());
     app.use(koaJson());
     app.use(koaMount("/public", koaStatic("./public")));

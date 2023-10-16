@@ -1,11 +1,14 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useRegisterMutation } from "@/queries/users";
+import { useAuthStore } from "@/states/auth_store";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
     const [formData, setFormData] = useState({
         username: "",
         email: "",
         password: "",
+        name: "",
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,41 +19,32 @@ const Register = () => {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const registerMutation = useRegisterMutation();
+    const navigator = useNavigate();
+    const { setLoggedUser } = useAuthStore();
 
-        console.log(formData);
+    useEffect(() => {
+        if (registerMutation.isSuccess) {
+            setLoggedUser(registerMutation.data);
+            navigator("/");
+        }
+    }, [registerMutation, navigator, setLoggedUser]);
+
+    const handleSubmit = () => {
+        registerMutation.mutate(formData);
     };
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-[#202124]">
             <form
-                onSubmit={handleSubmit}
+                onSubmit={e => {
+                    e.preventDefault();
+                    handleSubmit();
+                }}
                 className="w-[500px] rounded bg-[#525355] p-6 shadow-md"
             >
                 <div className="mb-4">
-                    <label
-                        className="mb-2 block text-sm font-bold text-white"
-                        htmlFor="username"
-                    >
-                        Username
-                    </label>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        required
-                        className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
-                        placeholder="Username"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label
-                        className="mb-2 block text-sm font-bold text-white"
-                        htmlFor="email"
-                    >
+                    <label className="mb-2 block text-sm font-bold text-white" htmlFor="email">
                         Email
                     </label>
                     <input
@@ -65,10 +59,22 @@ const Register = () => {
                     />
                 </div>
                 <div className="mb-4">
-                    <label
-                        className="mb-2 block text-sm font-bold text-white"
-                        htmlFor="password"
-                    >
+                    <label className="mb-2 block text-sm font-bold text-white" htmlFor="username">
+                        Username
+                    </label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        value={formData.username}
+                        onChange={handleChange}
+                        required
+                        className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
+                        placeholder="Username"
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="mb-2 block text-sm font-bold text-white" htmlFor="password">
                         Password
                     </label>
                     <input

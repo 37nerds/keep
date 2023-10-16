@@ -1,16 +1,17 @@
+import { TLoggedUser } from "@/queries/users";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 type TStore = {
-    loggedUser: boolean;
-    setLoggedUser: (user: boolean) => void;
+    loggedUser: TLoggedUser | null;
+    setLoggedUser: (user: TLoggedUser | null) => void;
 };
 
-const useAuthStore = create<TStore>()(
+export const useAuthStore = create<TStore>()(
     immer(
         devtools(set => ({
-            loggedUser: false,
+            loggedUser: null,
             setLoggedUser: user => {
                 set(state => {
                     state.loggedUser = user;
@@ -19,5 +20,3 @@ const useAuthStore = create<TStore>()(
         })),
     ),
 );
-
-export default useAuthStore;
