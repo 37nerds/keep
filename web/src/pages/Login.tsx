@@ -1,5 +1,7 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useLoginMutation } from "@/queries/users";
+import { useAuthStore } from "@/states/auth_store";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -15,23 +17,32 @@ const Login = () => {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const loginMutation = useLoginMutation();
+    const navigator = useNavigate();
+    const { setLoggedUser } = useAuthStore();
 
-        console.log(formData);
+    useEffect(() => {
+        if (loginMutation.isSuccess) {
+            setLoggedUser(loginMutation.data);
+            navigator("/");
+        }
+    }, [loginMutation, navigator, setLoggedUser]);
+
+    const handleSubmit = () => {
+        loginMutation.mutate(formData);
     };
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-[#202124]">
             <form
-                onSubmit={handleSubmit}
+                onSubmit={e => {
+                    e.preventDefault();
+                    handleSubmit();
+                }}
                 className="w-[500px] rounded bg-[#525355] p-6 shadow-md"
             >
                 <div className="mb-4">
-                    <label
-                        className="mb-2 block text-sm font-bold text-white"
-                        htmlFor="email"
-                    >
+                    <label className="mb-2 block text-sm font-bold text-white" htmlFor="email">
                         Email
                     </label>
                     <input
@@ -46,10 +57,7 @@ const Login = () => {
                     />
                 </div>
                 <div className="mb-4">
-                    <label
-                        className="mb-2 block text-sm font-bold text-white"
-                        htmlFor="password"
-                    >
+                    <label className="mb-2 block text-sm font-bold text-white" htmlFor="password">
                         Password
                     </label>
                     <input

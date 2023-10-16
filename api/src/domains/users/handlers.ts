@@ -1,5 +1,12 @@
+import {
+    TInsertUserBody,
+    TLoginUserBody,
+    TRegisterUserBody,
+    TUpdateUserBody,
+    TUserResponse,
+} from "./schemas";
+
 import { Context } from "koa";
-import { TInsertUserBody, TRegisterUserBody, TUpdateUserBody, TUserResponse } from "./schemas";
 import { BadRequestError, ValidationError } from "@base/errors";
 import { reply } from "@helpers/reply";
 import { hour } from "@helpers/time";
@@ -11,15 +18,18 @@ import jwt from "@helpers/jwt";
 export const AUTH_TOKEN = "auth_token";
 
 const loginUser = async (ctx: Context, user: TUser) => {
-    const expireInHours = 2;
-    const token = await jwt.generate({
-        username: user.username,
-        email: user.email,
-        name: user.name,
-    });
+    const expireInHours = 24 * 30;
+    const token = await jwt.generate(
+        {
+            username: user.username,
+            email: user.email,
+            name: user.name,
+        },
+        expireInHours,
+    );
     ctx.cookies.set(AUTH_TOKEN, token, {
         httpOnly: true,
-        maxAge: 60 * 60 * 1000 * expireInHours,
+        maxAge: hour * expireInHours,
     });
 };
 
@@ -53,6 +63,19 @@ export const profile = async (ctx: Context) => {
     ctx.status = 200;
 };
 
+export const login = async (ctx: Context) => {
+    const body = ctx.request.body as TLoginUserBody;
+    const { username, email } = body || {};
+    let user: TUser | null;
+    if (username) {
+        user = await usersRepo.find({ username });
+    } else {
+        user = await usersRepo.find({ email });
+    }
+    await loginUser(ctx, user);
+    return reply(ctx, 200, user);
+};
+
 export const index = async (ctx: Context) => {
     const { id } = ctx.request.query || {};
     if (id) {
@@ -80,7 +103,6 @@ export const destroy = async (ctx: Context) => {
     return reply(ctx, 204);
 };
 
-export const login = async (ctx: Context) => {};
 export const forgotPassword = async (ctx: Context) => {};
 
 export const resetPassword = async (ctx: Context) => {};
