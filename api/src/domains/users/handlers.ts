@@ -1,5 +1,5 @@
 import { Context } from "koa";
-import { TInsertUserBody, TRegisterUserBody, TUpdateUserBody } from "./schemas";
+import { TInsertUserBody, TRegisterUserBody, TUpdateUserBody, TUserResponse } from "./schemas";
 import { BadRequestError, ValidationError } from "@base/errors";
 import { reply } from "@helpers/reply";
 import { hour } from "@helpers/time";
@@ -8,7 +8,7 @@ import { TUser } from "./repository";
 import usersRepo from "./repository";
 import jwt from "@helpers/jwt";
 
-const AUTH_TOKEN = "auth_token";
+export const AUTH_TOKEN = "auth_token";
 
 const loginUser = async (ctx: Context, user: TUser) => {
     const expireInHours = 2;
@@ -48,6 +48,11 @@ export const register = async (ctx: Context) => {
     return reply(ctx, 201, user);
 };
 
+export const profile = async (ctx: Context) => {
+    ctx.body = ctx.user;
+    ctx.status = 200;
+};
+
 export const index = async (ctx: Context) => {
     const { id } = ctx.request.query || {};
     if (id) {
@@ -76,9 +81,6 @@ export const destroy = async (ctx: Context) => {
 };
 
 export const login = async (ctx: Context) => {};
-
-export const profile = async (ctx: Context) => {};
-
 export const forgotPassword = async (ctx: Context) => {};
 
 export const resetPassword = async (ctx: Context) => {};

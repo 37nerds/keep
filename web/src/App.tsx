@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import ProtectedLayout from "@/layouts/ProtectedLayout";
 import GuestLayout from "@/layouts/GuestLayout";
 import PublicLayout from "@/layouts/PublicLayout";
+import AppLayout from "./layouts/AppLayout";
 
 const renderRoutes = (routes: TRoute[]) => {
     return routes.map(({ path, component: Component }, index) => (
@@ -20,9 +21,13 @@ const App = () => {
         <QueryClientProvider client={queryClient}>
             <BrowserRouter>
                 <Routes>
-                    <Route element={<PublicLayout />}>{renderRoutes(public_routes)}</Route>
-                    <Route element={<ProtectedLayout />}>{renderRoutes(protected_routes)}</Route>
-                    <Route element={<GuestLayout />}>{renderRoutes(guest_routes)}</Route>
+                    <Route element={<AppLayout />}>
+                        <Route element={<PublicLayout />}>{renderRoutes(public_routes)}</Route>
+                        <Route element={<ProtectedLayout />}>
+                            {renderRoutes(protected_routes)}
+                        </Route>
+                        <Route element={<GuestLayout />}>{renderRoutes(guest_routes)}</Route>
+                    </Route>
                 </Routes>
             </BrowserRouter>
         </QueryClientProvider>

@@ -1,8 +1,8 @@
 import { TError } from "@/helpers/types";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
+import { useEffect } from "react";
 
 import http from "@/helpers/http";
-import { useEffect } from "react";
 
 type TRegisterUserPayload = {
     username: string;
@@ -14,15 +14,29 @@ type TRegisterUserPayload = {
 export type TLoggedUser = TRegisterUserPayload;
 
 export const useRegisterMutation = () => {
-    const mutation = useMutation<TLoggedUser, TError, TRegisterUserPayload>({
+    const m = useMutation<TLoggedUser, TError, TRegisterUserPayload>({
         mutationFn: data => http.post("/users/register", data, 201),
         mutationKey: ["post.users-registers"],
     });
     useEffect(() => {
-        if (mutation.isError) {
-            console.log(mutation.error);
+        if (m.isError) {
+            console.log(m.error);
         }
-    }, [mutation]);
+    }, [m]);
+    return m;
+};
 
-    return mutation;
+export const useProfileQuery = (enabled: boolean = true) => {
+    const q = useQuery<TLoggedUser, TError>({
+        queryFn: () => http.get("/users/profile", 200),
+        queryKey: ["get.users-profile"],
+        retry: false,
+        enabled: enabled,
+    });
+    useEffect(() => {
+        if (q.isError) {
+            console.log(q.error);
+        }
+    }, [q]);
+    return q;
 };

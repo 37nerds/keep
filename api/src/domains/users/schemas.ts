@@ -1,4 +1,5 @@
 import { TSchema } from "@base/types";
+import { ObjectId } from "mongodb";
 import { z } from "zod";
 
 const registerUserBodySchema = z.object({
@@ -13,6 +14,25 @@ export const registerUserSchema: TSchema = {
 };
 
 export type TRegisterUserBody = z.infer<typeof registerUserBodySchema>;
+
+export type TUser = {
+    _id: ObjectId;
+    createdAt?: Date;
+    updatedAt?: Date;
+    username: string;
+    email: string;
+    password: string;
+    name?: string;
+};
+
+export type TUserResponse = {
+    _id: ObjectId;
+    createdAt: Date;
+    updatedAt: Date;
+    username: string;
+    email: string;
+    name?: string;
+};
 
 const userStatusSchema = z.enum(["active", "inactive"]);
 

@@ -10,6 +10,9 @@ import koaMount from "koa-mount";
 
 import generateRequestId from "@middlewares/generate_request_id";
 import mongodb from "@base/mongodb";
+import { TUser } from "@domains/users/schemas";
+
+interface XContext {}
 
 declare module "koa" {
     interface Context {
@@ -17,6 +20,7 @@ declare module "koa" {
         request: Request & {
             id: string;
         };
+        user: TUser;
     }
 }
 
