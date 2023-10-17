@@ -34,6 +34,10 @@ const loginUser = async (ctx: Context, user: TUser) => {
     });
 };
 
+const logoutUser = (ctx: Context) => {
+    ctx.cookies.set(AUTH_TOKEN, "", { httpOnly: true, maxAge: 0 });
+};
+
 export const register = async (ctx: Context) => {
     const body = ctx.request.body as TRegisterUserBody;
     const { username, email } = body;
@@ -80,6 +84,11 @@ export const login = async (ctx: Context) => {
     }
     await loginUser(ctx, user);
     return reply(ctx, 200, { ...user, password: undefined });
+};
+
+export const logout = async (ctx: Context) => {
+    logoutUser(ctx);
+    return reply(ctx, 204);
 };
 
 export const index = async (ctx: Context) => {

@@ -1,3 +1,4 @@
+import AuthLayout from "@/layouts/AuthLayout";
 import { useRegisterMutation } from "@/queries/users";
 import { useAuthStore } from "@/states/auth_store";
 import { useEffect, useState } from "react";
@@ -35,7 +36,7 @@ const Register = () => {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-[#202124]">
+        <AuthLayout firstText="Join on">
             <form
                 onSubmit={e => {
                     e.preventDefault();
@@ -103,7 +104,7 @@ const Register = () => {
                     </Link>
                 </div>
             </form>
-        </div>
+        </AuthLayout>
     );
 };
 

@@ -47,3 +47,12 @@ export const useLoginMutation = () => {
     useMutationEH(m);
     return m;
 };
+
+export const useLogoutMutation = () => {
+    const m = useMutation<null, TError, null>({
+        mutationFn: () => http.delete("/users/logout", 204),
+        mutationKey: ["delete.users-logout"],
+    });
+    useMutationEH(m);
+    return m;
+};

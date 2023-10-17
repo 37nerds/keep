@@ -1,3 +1,4 @@
+import AuthLayout from "@/layouts/AuthLayout";
 import { useLoginMutation } from "@/queries/users";
 import { useAuthStore } from "@/states/auth_store";
 import { useEffect, useState } from "react";
@@ -33,7 +34,7 @@ const Login = () => {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-[#202124]">
+        <AuthLayout firstText="Login to">
             <form
                 onSubmit={e => {
                     e.preventDefault();
@@ -86,7 +87,7 @@ const Login = () => {
                     </Link>
                 </div>
             </form>
-        </div>
+        </AuthLayout>
     );
 };
 
