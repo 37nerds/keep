@@ -13,7 +13,6 @@ const eh = <T>(func: (ctx: Context, next: Next) => Promise<T>) => {
             }
             ctx.status = error.status;
             ctx.body = {
-                request_id: ctx.request.id,
                 name: error.name,
                 message: error.message,
                 errors: error?.errors ? JSON.parse(error.errors) : undefined,

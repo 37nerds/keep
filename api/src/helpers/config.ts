@@ -1,6 +1,6 @@
 import env from "@configs/env";
 
-export const loadEnv = (name: string, defaultValue: string): string => {
+export const loadEnv = (name: string, defaultValue: string = ""): string => {
     return process.env[name] || defaultValue;
 };
 
