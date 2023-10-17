@@ -12,7 +12,7 @@ const http = {
             },
             credentials: "include",
         });
-        const payload = await response.json();
+        const payload = response.status === 204 ? {} : await response.json();
         if (happy !== response.status) {
             throw payload;
         }
@@ -23,6 +23,9 @@ const http = {
     },
     post: (endpoint: string, body: object, happy: number) => {
         return http.json(endpoint, "POST", body, happy);
+    },
+    delete: (endpoint: string, happy: number) => {
+        return http.json(endpoint, "DELETE", null, happy);
     },
 };
 
