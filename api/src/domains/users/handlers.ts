@@ -1,42 +1,13 @@
-import {
-    TInsertUserBody,
-    TLoginUserBody,
-    TRegisterUserBody,
-    TUpdateUserBody,
-    TUserResponse,
-} from "./schemas";
+import { TInsertUserBody, TLoginUserBody, TRegisterUserBody, TUpdateUserBody } from "./schemas";
 
 import { Context } from "koa";
 import { BadRequestError, ValidationError } from "@base/errors";
 import { reply } from "@helpers/reply";
-import { hour } from "@helpers/time";
 import { TUser } from "./repository";
+import { loginUser, logoutUser } from "./logic";
 
 import usersRepo from "./repository";
-import jwt from "@helpers/jwt";
 import crypto from "@helpers/crypto";
-
-export const AUTH_TOKEN = "auth_token";
-
-const loginUser = async (ctx: Context, user: TUser) => {
-    const expireInHours = 24 * 30;
-    const token = await jwt.generate(
-        {
-            username: user.username,
-            email: user.email,
-            name: user.name,
-        },
-        expireInHours,
-    );
-    ctx.cookies.set(AUTH_TOKEN, token, {
-        httpOnly: true,
-        maxAge: hour * expireInHours,
-    });
-};
-
-const logoutUser = (ctx: Context) => {
-    ctx.cookies.set(AUTH_TOKEN, "", { httpOnly: true, maxAge: 0 });
-};
 
 export const register = async (ctx: Context) => {
     const body = ctx.request.body as TRegisterUserBody;
