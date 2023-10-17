@@ -4,7 +4,6 @@ import type { Db } from "mongodb";
 import { ObjectId, Document, Filter } from "mongodb";
 
 import repository from "@base/repository";
-import emitter from "@base/emitter";
 
 export type TUser = TInsertUserBody & {
     _id: ObjectId;
@@ -12,14 +11,8 @@ export type TUser = TInsertUserBody & {
 
 export const USERS = "users";
 
-emitter().on("users:finds", (users: TUser[]) => {
-    console.log("user finds listener");
-    console.log(users);
-});
-
 const finds = async (db: Db): Promise<TUser[]> => {
     const users = await repository.finds<TUser>(db, USERS);
-    emitter().emit("users:finds", users);
     return users;
 };
 
