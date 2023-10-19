@@ -1,3 +1,5 @@
+import "./listeners";
+
 import type {
     TUpdateUserQuery,
     TInsertUserBody,
@@ -5,7 +7,6 @@ import type {
     TDeleteUserQuery,
     TLoginUserBody,
     TRegisterUserBody,
-    TUser,
 } from "./schemas";
 
 import {
