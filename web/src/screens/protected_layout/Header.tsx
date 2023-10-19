@@ -17,13 +17,13 @@ const Header = () => {
                 <SearchInput />
             </div>
             <div className="flex">
-                <div className="flex gap-4">
+                <div className="flex items-center gap-4">
                     <HeaderIcon icon={ArrowPathIcon} />
                     <HeaderIcon icon={QueueListIcon} />
                     <HeaderIcon icon={Cog6ToothIcon} />
                 </div>
                 <div>
-                    <div className="ml-16 rounded-full p-1">
+                    <div className="rounded-full p-1">
                         <Profile />
                     </div>
                 </div>
