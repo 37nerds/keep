@@ -1,5 +1,5 @@
 import type { Context } from "koa";
-import type { TUser } from "./schemas";
+import type { TUser } from "./repository";
 
 import { hour } from "@helpers/time";
 import { USERS_LOGIN, USERS_LOGOUT } from "./events";

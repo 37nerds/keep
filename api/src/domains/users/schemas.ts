@@ -1,5 +1,16 @@
+import type { TUser } from "@domains/users/repository";
+
 import { ObjectId } from "mongodb";
 import { z } from "zod";
+
+export type TUserResponse = {
+    _id: ObjectId;
+    createdAt: Date;
+    updatedAt: Date;
+    username: string;
+    email: string;
+    name?: string;
+};
 
 export const registerUserBodySchema = z.object({
     username: z.string(),
@@ -51,25 +62,6 @@ export type TGetUserQuery = z.infer<typeof getUserQuerySchema>;
 export type TDeleteUserQuery = z.infer<typeof updateQuerySchema>;
 export type TLoginUserBody = z.infer<typeof loginUserBodySchema>;
 export type TRegisterUserBody = z.infer<typeof registerUserBodySchema>;
-
-export type TUser = {
-    _id: ObjectId;
-    createdAt?: Date;
-    updatedAt?: Date;
-    username: string;
-    email: string;
-    password: string;
-    name?: string;
-};
-
-export type TUserResponse = {
-    _id: ObjectId;
-    createdAt: Date;
-    updatedAt: Date;
-    username: string;
-    email: string;
-    name?: string;
-};
 
 export const userResponse = (user: TUser): TUserResponse => {
     return { ...user, password: undefined } as TUserResponse;
