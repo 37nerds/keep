@@ -1,16 +1,14 @@
 import type { TInsertUserBody, TUpdateUserBody } from "./schemas";
 
-import { Document, Filter, ObjectId } from "mongodb";
+import { Document, Filter } from "mongodb";
 import { BadRequestError } from "@base/errors";
 import { USERS_CREATED, USERS_DELETED, USERS_FIND, USERS_FINDS, USERS_UPDATED } from "./events";
 
-import repository from "@base/repository";
+import repository, { TDocBase } from "@base/repository";
 import crypto from "@helpers/crypto";
 import emitter from "@base/emitter";
 
-export type TUser = TInsertUserBody & {
-    _id: ObjectId;
-};
+export type TUser = TInsertUserBody & TDocBase;
 
 export const USERS = "users";
 
@@ -57,7 +55,7 @@ const insert = async (doc: TInsertUserBody): Promise<TUser> => {
     return user;
 };
 
-const update = async ( userId: string, doc: TUpdateUserBody): Promise<TUser> => {
+const update = async (userId: string, doc: TUpdateUserBody): Promise<TUser> => {
     const user = await repository.update<TUpdateUserBody, TUser>(USERS, userId, doc);
     emitter().emit(USERS_UPDATED, user);
     return user;

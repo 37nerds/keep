@@ -1,5 +1,4 @@
-import type { TUser } from "./schemas";
-
+import { TUser } from "@domains/users/repository";
 import { USERS_LOGIN } from "./events";
 
 import emitter from "@base/emitter";

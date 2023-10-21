@@ -1,4 +1,4 @@
-import type { TUser } from "@domains/users/schemas";
+import { TUser } from "@domains/users/repository";
 
 import koaLogger from "koa-logger";
 import koaJson from "koa-json";
