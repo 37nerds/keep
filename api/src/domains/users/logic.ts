@@ -1,5 +1,6 @@
-import { Context } from "koa";
-import { TUser } from "./schemas";
+import type { Context } from "koa";
+import type { TUser } from "./schemas";
+
 import { hour } from "@helpers/time";
 import { USERS_LOGIN, USERS_LOGOUT } from "./events";
 import { BadRequestError, ServerSideError } from "@base/errors";
@@ -10,7 +11,7 @@ import usersRepo from "./repository";
 
 const AUTH_TOKEN = "auth_token";
 
-export type TAuthTokenPaylaod = {
+export type TAuthTokenPayload = {
     username: string;
     email: string;
     name?: string;
@@ -19,7 +20,7 @@ export type TAuthTokenPaylaod = {
 export const loginUser = async (ctx: Context, user: TUser) => {
     try {
         const expireInHours = 24 * 30;
-        const payload: TAuthTokenPaylaod = {
+        const payload: TAuthTokenPayload = {
             username: user.username,
             email: user.email,
             name: user.name,
@@ -41,10 +42,10 @@ export const logoutUser = (ctx: Context) => {
 };
 
 export const verifyAuthToken = async (ctx: Context): Promise<TUser> => {
-    let decoded: TAuthTokenPaylaod;
+    let decoded: TAuthTokenPayload;
     try {
         const authToken = ctx.cookies.get(AUTH_TOKEN);
-        decoded = (await jwt.verify(authToken || "")) as TAuthTokenPaylaod;
+        decoded = (await jwt.verify(authToken || "")) as TAuthTokenPayload;
     } catch (e: any) {
         throw new BadRequestError(e?.message || "auth token is invalid");
     }
