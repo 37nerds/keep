@@ -98,3 +98,5 @@ export type TUpdateUserQuery = z.infer<typeof patchUpdateQuerySchema>;
 export type TGetUserQuery = z.infer<typeof getUserQuerySchema>;
 export type TDeleteUserQuery = z.infer<typeof patchUpdateQuerySchema>;
 export type TLoginUserBody = z.infer<typeof loginUserBodySchema>;
+
+export const userResponse = (user: TUser) => ({ ...user, password: undefined });

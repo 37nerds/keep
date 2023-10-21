@@ -1,4 +1,10 @@
-import { TInsertUserBody, TLoginUserBody, TRegisterUserBody, TUpdateUserBody } from "./schemas";
+import {
+    TInsertUserBody,
+    TLoginUserBody,
+    TRegisterUserBody,
+    TUpdateUserBody,
+    userResponse,
+} from "./schemas";
 
 import { Context } from "koa";
 import { BadRequestError, ValidationError } from "@base/errors";
@@ -8,37 +14,16 @@ import { loginUser, logoutUser } from "./logic";
 
 import usersRepo from "./repository";
 import crypto from "@helpers/crypto";
+import { warn } from "console";
 
 export const register = async (ctx: Context) => {
-    const body = ctx.request.body as TRegisterUserBody;
-    const { username, email } = body;
-    let user: TUser | null;
-    try {
-        user = await usersRepo.find({ username });
-    } catch (e: any) {
-        user = null;
-    }
-    if (user) {
-        throw new BadRequestError("username already exits");
-    }
-    try {
-        user = await usersRepo.find({ email });
-    } catch (e: any) {
-        user = null;
-    }
-    if (user) {
-        throw new BadRequestError("email already exits");
-    }
-
-    body.password = await crypto.hash(body.password);
-
-    user = await usersRepo.insert(body);
+    const user = await usersRepo.insert(ctx.request.body);
     await loginUser(ctx, user);
-    return reply(ctx, 201, { ...user, password: undefined });
+    return reply(ctx, 201, userResponse(user));
 };
 
 export const profile = async (ctx: Context) => {
-    return reply(ctx, 200, { ...ctx.user, password: undefined });
+    return reply(ctx, 200, userResponse(ctx.user));
 };
 
 export const login = async (ctx: Context) => {
@@ -54,7 +39,7 @@ export const login = async (ctx: Context) => {
         throw new BadRequestError("invalid credintails");
     }
     await loginUser(ctx, user);
-    return reply(ctx, 200, { ...user, password: undefined });
+    return reply(ctx, 200, userResponse(user));
 };
 
 export const logout = async (ctx: Context) => {
@@ -69,18 +54,22 @@ export const index = async (ctx: Context) => {
         return reply(ctx, 200, user);
     }
     const users = await usersRepo.finds(ctx.db);
-    return reply(ctx, 200, users);
+    return reply(
+        ctx,
+        200,
+        users.map((user) => userResponse(user)),
+    );
 };
 
 export const save = async (ctx: Context) => {
     const user = await usersRepo.insert(ctx.request.body as TInsertUserBody);
-    return reply(ctx, 201, user);
+    return reply(ctx, 201, userResponse(user));
 };
 
 export const update = async (ctx: Context) => {
     const { id } = ctx.request.query || {};
     const user = await usersRepo.update(ctx.db, id as string, ctx.request.body as TUpdateUserBody);
-    return reply(ctx, 200, user);
+    return reply(ctx, 200, userResponse(user));
 };
 
 export const destroy = async (ctx: Context) => {
