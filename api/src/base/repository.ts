@@ -18,8 +18,8 @@ const getCollection = async (collection: string) => {
     return db.collection(collection);
 };
 
-const finds = async <T>(db: Db, collection: string): Promise<T[]> => {
-    const c = db.collection(collection);
+const finds = async <T>(collection: string): Promise<T[]> => {
+    const c = await getCollection(collection);
     const items = await c.find().toArray();
     return items as T[];
 };
@@ -52,8 +52,8 @@ const insert = async <T, T2>(collection: string, doc: T): Promise<T2> => {
     return saveDoc as T2;
 };
 
-const update = async <T, T2>(db: Db, collection: string, _id: string, doc: T): Promise<T2> => {
-    const c = db.collection(collection);
+const update = async <T, T2>(collection: string, _id: string, doc: T): Promise<T2> => {
+    const c = await getCollection(collection);
     const r = await c.updateOne({ _id: toObjectId(_id) }, { $set: doc });
     if (r.matchedCount === 0) {
         throw new DatabaseError(`failed to update item in ${collection}`);
@@ -61,8 +61,8 @@ const update = async <T, T2>(db: Db, collection: string, _id: string, doc: T): P
     return find<T2>(collection, _id);
 };
 
-const destroy = async (db: Db, collection: string, _id: string): Promise<void> => {
-    const c = db.collection(collection);
+const destroy = async (collection: string, _id: string): Promise<void> => {
+    const c = await getCollection(collection);
     const r = await c.deleteOne({ _id: toObjectId(_id) });
     if (r.deletedCount !== 1) {
         throw new DatabaseError(`failed to delete item in ${collection}`);

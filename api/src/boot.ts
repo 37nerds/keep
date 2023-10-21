@@ -1,4 +1,3 @@
-import type { Db } from "mongodb";
 import type { TUser } from "@domains/users/schemas";
 
 import koaLogger from "koa-logger";
@@ -15,7 +14,6 @@ import Koa from "koa";
 
 declare module "koa" {
     interface Context {
-        db: Db;
         user: TUser;
     }
 }
@@ -49,7 +47,7 @@ const boot = async () => {
     const app = new Koa();
 
     await loadMiddlewares(app);
-    app.context.db = await mongodb();
+    await mongodb();
     await loadDomains(app);
 
     return app;
