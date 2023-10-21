@@ -1,18 +1,17 @@
 import type { Db } from "mongodb";
+import type { TUser } from "@domains/users/schemas";
 
-import Koa from "koa";
 import koaLogger from "koa-logger";
 import koaJson from "koa-json";
 import koaCors from "@koa/cors";
 import koaBodyparser from "@koa/bodyparser";
 import koaStatic from "koa-static";
 import koaMount from "koa-mount";
-
-import generateRequestId from "@middlewares/generate_request_id";
 import mongodb from "@base/mongodb";
-import { TUser } from "@domains/users/schemas";
+import requestId from "@middlewares/request_id";
+import domains from "@configs/domains";
 
-interface XContext {}
+import Koa from "koa";
 
 declare module "koa" {
     interface Context {
@@ -24,7 +23,7 @@ declare module "koa" {
     }
 }
 
-const loadMiddlewares = (app: Koa) => {
+const loadMiddlewares = async (app: Koa) => {
     app.use(koaBodyparser());
     app.use(
         koaCors({
@@ -34,16 +33,10 @@ const loadMiddlewares = (app: Koa) => {
     app.use(koaLogger());
     app.use(koaJson());
     app.use(koaMount("/public", koaStatic("./public")));
-    app.use(generateRequestId());
+    app.use(requestId());
 };
 
-const boot = async (domains: string[]) => {
-    const app = new Koa();
-
-    loadMiddlewares(app);
-
-    app.context.db = await mongodb();
-
+const loadDomains = async (app: Koa) => {
     for (const domain of domains) {
         const fileName = `./domains/${domain}/index`;
         try {
@@ -53,6 +46,14 @@ const boot = async (domains: string[]) => {
             console.error(`Error importing module for '${fileName}':`, error);
         }
     }
+};
+
+const boot = async () => {
+    const app = new Koa();
+
+    await loadMiddlewares(app);
+    app.context.db = await mongodb();
+    await loadDomains(app);
 
     return app;
 };

@@ -1,9 +1,8 @@
 import boot from "./boot";
 import env from "./configs/env";
-import domains from "./configs/domains";
 
 const main = async () => {
-    const app = await boot(domains);
+    const app = await boot();
     app.listen(env.PORT, () => {
         console.log(`Server in running on port: ${env.PORT}`);
     });
@@ -11,5 +10,5 @@ const main = async () => {
 
 main().catch((err) => {
     console.error(err);
-    process.exit();
+    process.exit(1);
 });
