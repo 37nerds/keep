@@ -1,23 +1,26 @@
-import {
+import type {
+    TDeleteUserQuery,
+    TGetUserQuery,
     TInsertUserBody,
     TLoginUserBody,
     TRegisterUserBody,
     TUpdateUserBody,
-    userResponse,
+    TUpdateUserQuery,
 } from "./schemas";
 
-import { Context } from "koa";
-import { BadRequestError, ValidationError } from "@base/errors";
+import type { Context } from "koa";
+import type { TUser } from "./repository";
+
+import { userResponse } from "./schemas";
+import { BadRequestError } from "@base/errors";
 import { reply } from "@helpers/reply";
-import { TUser } from "./repository";
 import { loginUser, logoutUser } from "./logic";
 
 import usersRepo from "./repository";
 import crypto from "@helpers/crypto";
-import { warn } from "console";
 
 export const register = async (ctx: Context) => {
-    const user = await usersRepo.insert(ctx.request.body);
+    const user = await usersRepo.insert(ctx.request.body as TRegisterUserBody);
     await loginUser(ctx, user);
     return reply(ctx, 201, userResponse(user));
 };
@@ -36,7 +39,7 @@ export const login = async (ctx: Context) => {
         user = await usersRepo.find({ email });
     }
     if (!(await crypto.compare(user.password, password))) {
-        throw new BadRequestError("invalid credintails");
+        throw new BadRequestError("invalid credentials");
     }
     await loginUser(ctx, user);
     return reply(ctx, 200, userResponse(user));
@@ -48,7 +51,7 @@ export const logout = async (ctx: Context) => {
 };
 
 export const index = async (ctx: Context) => {
-    const { id } = ctx.request.query || {};
+    const { id } = (ctx.request.query as TGetUserQuery) || {};
     if (id) {
         const user = await usersRepo.findById(id as string);
         return reply(ctx, 200, user);
@@ -67,13 +70,13 @@ export const save = async (ctx: Context) => {
 };
 
 export const update = async (ctx: Context) => {
-    const { id } = ctx.request.query || {};
+    const { id } = (ctx.request.query as TUpdateUserQuery) || {};
     const user = await usersRepo.update(ctx.db, id as string, ctx.request.body as TUpdateUserBody);
     return reply(ctx, 200, userResponse(user));
 };
 
 export const destroy = async (ctx: Context) => {
-    const { id } = ctx.request.query || {};
+    const { id } = (ctx.request.query as TDeleteUserQuery) || {};
     await usersRepo.destroy(ctx.db, id as string);
     return reply(ctx, 204);
 };

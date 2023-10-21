@@ -1,22 +1,11 @@
 import "./listeners";
-
-import type {
-    TUpdateUserQuery,
-    TInsertUserBody,
-    TUpdateUserBody,
-    TDeleteUserQuery,
-    TLoginUserBody,
-    TRegisterUserBody,
-} from "./schemas";
-
 import {
-    postUserSchema,
-    patchUserSchema,
-    TGetUserQuery,
-    getUserSchema,
-    deleteUserSchema,
-    loginUserSchema,
-    registerUserSchema,
+    registerUserBodySchema,
+    loginUserBodySchema,
+    getUserQuerySchema,
+    postUserBodySchema,
+    updateBodySchema,
+    updateQuerySchema,
 } from "./schemas";
 
 import {
@@ -44,8 +33,8 @@ export default (app: Koa) => {
         prefix: "/api/v1/users",
     });
 
-    router.post("/register", validate<null, TRegisterUserBody>(registerUserSchema), eh(register));
-    router.post("/login", validate<null, TLoginUserBody>(loginUserSchema), eh(login));
+    router.post("/register", validate(null, registerUserBodySchema), eh(register));
+    router.post("/login", validate(null, loginUserBodySchema), eh(login));
 
     router.get("/profile", protect(), eh(profile));
     router.delete("/logout", protect(), eh(logout));
@@ -54,10 +43,10 @@ export default (app: Koa) => {
     router.post("/reset-password", eh(resetPassword));
     router.post("/change-password", eh(changePassword));
 
-    router.get("/", validate<TGetUserQuery, null>(getUserSchema), eh(index));
-    router.post("/", validate<null, TInsertUserBody>(postUserSchema), eh(save));
-    router.patch("/", validate<TUpdateUserQuery, TUpdateUserBody>(patchUserSchema), eh(update));
-    router.delete("/", validate<TDeleteUserQuery, null>(deleteUserSchema), eh(destroy));
+    router.get("/", validate(getUserQuerySchema, null), eh(index));
+    router.post("/", validate(null, postUserBodySchema), eh(save));
+    router.patch("/", validate(updateQuerySchema, updateBodySchema), eh(update));
+    router.delete("/", validate(updateQuerySchema, null), eh(destroy));
 
     app.use(router.routes());
     app.use(router.allowedMethods());

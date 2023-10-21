@@ -1,7 +1,7 @@
 import type { TInsertUserBody, TUpdateUserBody } from "./schemas";
 import type { Db } from "mongodb";
 
-import { ObjectId, Document, Filter } from "mongodb";
+import { Document, Filter, ObjectId } from "mongodb";
 import { BadRequestError } from "@base/errors";
 
 import repository from "@base/repository";
@@ -14,8 +14,7 @@ export type TUser = TInsertUserBody & {
 export const USERS = "users";
 
 const finds = async (db: Db): Promise<TUser[]> => {
-    const users = await repository.finds<TUser>(db, USERS);
-    return users;
+    return await repository.finds<TUser>(db, USERS);
 };
 
 const find = async (filter: Filter<Document>) => {
