@@ -29,25 +29,23 @@ import validate from "@middlewares/validate";
 import protect from "@middlewares/protect";
 
 export default (app: Koa) => {
-    const router = new Router({
-        prefix: "/api/v1/users",
-    });
+    const r = new Router({ prefix: "/api/v1/users" });
 
-    router.post("/register", validate(null, registerUserBodySchema), eh(register));
-    router.post("/login", validate(null, loginUserBodySchema), eh(login));
+    r.post("/register", validate(null, registerUserBodySchema), eh(register));
+    r.post("/login", validate(null, loginUserBodySchema), eh(login));
 
-    router.get("/profile", protect(), eh(profile));
-    router.delete("/logout", protect(), eh(logout));
+    r.get("/profile", protect(), eh(profile));
+    r.delete("/logout", protect(), eh(logout));
 
-    router.post("/forgot-password", eh(forgotPassword));
-    router.post("/reset-password", eh(resetPassword));
-    router.post("/change-password", eh(changePassword));
+    r.post("/forgot-password", eh(forgotPassword));
+    r.post("/reset-password", eh(resetPassword));
+    r.post("/change-password", eh(changePassword));
 
-    router.get("/", validate(getUserQuerySchema, null), eh(index));
-    router.post("/", validate(null, postUserBodySchema), eh(save));
-    router.patch("/", validate(updateQuerySchema, updateBodySchema), eh(update));
-    router.delete("/", validate(updateQuerySchema, null), eh(destroy));
+    r.get("/", validate(getUserQuerySchema, null), eh(index));
+    r.post("/", validate(null, postUserBodySchema), eh(save));
+    r.patch("/", validate(updateQuerySchema, updateBodySchema), eh(update));
+    r.delete("/", validate(updateQuerySchema, null), eh(destroy));
 
-    app.use(router.routes());
-    app.use(router.allowedMethods());
+    app.use(r.routes());
+    app.use(r.allowedMethods());
 };
