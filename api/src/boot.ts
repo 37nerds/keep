@@ -16,14 +16,12 @@ import Koa from "koa";
 declare module "koa" {
     interface Context {
         db: Db;
-        request: Request & {
-            id: string;
-        };
         user: TUser;
     }
 }
 
 const loadMiddlewares = async (app: Koa) => {
+    app.use(requestId());
     app.use(koaBodyparser());
     app.use(
         koaCors({
@@ -33,7 +31,6 @@ const loadMiddlewares = async (app: Koa) => {
     app.use(koaLogger());
     app.use(koaJson());
     app.use(koaMount("/public", koaStatic("./public")));
-    app.use(requestId());
 };
 
 const loadDomains = async (app: Koa) => {
