@@ -1,5 +1,4 @@
 import type { TInsertUserBody, TUpdateUserBody } from "./schemas";
-import type { Db } from "mongodb";
 
 import { Document, Filter, ObjectId } from "mongodb";
 import { BadRequestError } from "@base/errors";
@@ -15,8 +14,8 @@ export type TUser = TInsertUserBody & {
 
 export const USERS = "users";
 
-const finds = async (db: Db): Promise<TUser[]> => {
-    const users = await repository.finds<TUser>(db, USERS);
+const finds = async (): Promise<TUser[]> => {
+    const users = await repository.finds<TUser>(USERS);
     emitter().emit(USERS_FINDS, users);
     return users;
 };
@@ -58,14 +57,14 @@ const insert = async (doc: TInsertUserBody): Promise<TUser> => {
     return user;
 };
 
-const update = async (db: Db, userId: string, doc: TUpdateUserBody): Promise<TUser> => {
-    const user = await repository.update<TUpdateUserBody, TUser>(db, USERS, userId, doc);
+const update = async ( userId: string, doc: TUpdateUserBody): Promise<TUser> => {
+    const user = await repository.update<TUpdateUserBody, TUser>(USERS, userId, doc);
     emitter().emit(USERS_UPDATED, user);
     return user;
 };
 
-const destroy = async (db: Db, userId: string): Promise<void> => {
-    await repository.destroy(db, USERS, userId);
+const destroy = async (userId: string): Promise<void> => {
+    await repository.destroy(USERS, userId);
     emitter().emit(USERS_DELETED, userId);
 };
 

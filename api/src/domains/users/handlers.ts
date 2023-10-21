@@ -56,7 +56,7 @@ export const index = async (ctx: Context) => {
         const user = await usersRepo.findById(id as string);
         return reply(ctx, 200, user);
     }
-    const users = await usersRepo.finds(ctx.db);
+    const users = await usersRepo.finds();
     return reply(
         ctx,
         200,
@@ -71,13 +71,13 @@ export const save = async (ctx: Context) => {
 
 export const update = async (ctx: Context) => {
     const { id } = (ctx.request.query as TUpdateUserQuery) || {};
-    const user = await usersRepo.update(ctx.db, id as string, ctx.request.body as TUpdateUserBody);
+    const user = await usersRepo.update(id as string, ctx.request.body as TUpdateUserBody);
     return reply(ctx, 200, userResponse(user));
 };
 
 export const destroy = async (ctx: Context) => {
     const { id } = (ctx.request.query as TDeleteUserQuery) || {};
-    await usersRepo.destroy(ctx.db, id as string);
+    await usersRepo.destroy(id as string);
     return reply(ctx, 204);
 };
 
