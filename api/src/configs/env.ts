@@ -10,8 +10,14 @@ type TEnv = {
     NODE_ENV: TNodeEnv;
     JWT_SECRET_KEY: string;
     CRYPTO_SALT_ROUNDS: number;
+
     REDIS_HOSTNAME: string;
     REDIS_PORT: number;
+
+    SMTP_HOST: string;
+    SMTP_PORT: number;
+    SMTP_USERNAME: string;
+    SMTP_PASSWORD: string;
 };
 
 const env: TEnv = {
@@ -20,8 +26,14 @@ const env: TEnv = {
     NODE_ENV: loadEnv("NODE_ENV", "prod") as TNodeEnv,
     JWT_SECRET_KEY: loadEnv("JWT_SECRET_KEY", ""),
     CRYPTO_SALT_ROUNDS: Number(loadEnv("CRYPTO_SALT_ROUNDS")),
+
     REDIS_HOSTNAME: loadEnv("REDIS_HOSTNAME", "127.0.0.1"),
     REDIS_PORT: Number(loadEnv("REDIS_PORT", "6379")),
+
+    SMTP_HOST: loadEnv("SMTP_HOST", ""),
+    SMTP_PORT: Number(loadEnv("SMTP_PORT", "")),
+    SMTP_USERNAME: loadEnv("SMTP_USERNAME", ""),
+    SMTP_PASSWORD: loadEnv("SMTP_PASSWORD", ""),
 };
 
 export default env;
