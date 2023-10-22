@@ -10,7 +10,7 @@ export type TEmailEvent = {
     data: object;
 };
 
-const emailTemplatesPath = path.join(__dirname, "..", "..", "tmpls", "emails");
+const emailTemplatesPath = path.join(__dirname, "..", "..", "..", "tmpl", "email");
 const emailTemplates = loadTemplates(emailTemplatesPath);
 
 const email = async (event: TEmailEvent) => {
