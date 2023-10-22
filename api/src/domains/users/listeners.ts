@@ -1,9 +1,10 @@
-import { TUser } from "@domains/users/repository";
+import type { TUser } from "@domains/users/repository";
+
 import { USERS_LOGIN } from "./events";
 
 import emitter from "@base/emitter";
-import { addEmail } from "@base/queue";
+import queue from "@base/queue";
 
-emitter().on(USERS_LOGIN, (user: TUser) => {
-    addEmail({ to: user.email, subject: "Login Alert", template: "login_alert.ejs", data: user });
+emitter().on(USERS_LOGIN, (user: TUser, ip: string) => {
+    queue("login_alert", { ...user, ip });
 });

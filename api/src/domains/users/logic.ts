@@ -30,7 +30,7 @@ export const loginUser = async (ctx: Context, user: TUser) => {
             httpOnly: true,
             maxAge: hour * expireInHours,
         });
-        emitter().emit(USERS_LOGIN, user);
+        emitter().emit(USERS_LOGIN, user, ctx.request.ip);
     } catch (e: any) {
         throw new ServerSideError("unable to generate or set the token cookie");
     }
