@@ -1,4 +1,4 @@
-import { TUser } from "@domains/users/repository";
+import type { TUser } from "@domains/users/repository";
 
 import koaLogger from "koa-logger";
 import koaJson from "koa-json";
@@ -33,7 +33,7 @@ const loadMiddlewares = async (app: Koa) => {
 
 const loadDomains = async (app: Koa) => {
     for (const domain of domains) {
-        const fileName = `./domains/${domain}/index`;
+        const fileName = `../domains/${domain}/index`;
         try {
             const domainModule = await import(fileName);
             domainModule.default(app);
@@ -43,14 +43,14 @@ const loadDomains = async (app: Koa) => {
     }
 };
 
-const boot = async () => {
-    const app = new Koa();
+const app = async () => {
+    const a = new Koa();
 
-    await loadMiddlewares(app);
+    await loadMiddlewares(a);
     await mongodb();
-    await loadDomains(app);
+    await loadDomains(a);
 
-    return app;
+    return a;
 };
 
-export default boot;
+export default app;

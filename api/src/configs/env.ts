@@ -1,7 +1,8 @@
 import "dotenv/config";
 
+import type { TNodeEnv } from "@base/types";
+
 import { loadEnv } from "@helpers/config";
-import { TNodeEnv } from "@base/types";
 
 type TEnv = {
     PORT: number;
@@ -9,6 +10,8 @@ type TEnv = {
     NODE_ENV: TNodeEnv;
     JWT_SECRET_KEY: string;
     CRYPTO_SALT_ROUNDS: number;
+    REDIS_HOSTNAME: string;
+    REDIS_PORT: number;
 };
 
 const env: TEnv = {
@@ -17,6 +20,8 @@ const env: TEnv = {
     NODE_ENV: loadEnv("NODE_ENV", "prod") as TNodeEnv,
     JWT_SECRET_KEY: loadEnv("JWT_SECRET_KEY", ""),
     CRYPTO_SALT_ROUNDS: Number(loadEnv("CRYPTO_SALT_ROUNDS")),
+    REDIS_HOSTNAME: loadEnv("REDIS_HOSTNAME", "127.0.0.1"),
+    REDIS_PORT: Number(loadEnv("REDIS_PORT", "6379")),
 };
 
 export default env;

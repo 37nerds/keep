@@ -1,10 +1,11 @@
+import type { Db } from "mongodb";
+import { MongoClient } from "mongodb";
 import env from "@configs/env";
-import { Db, MongoClient } from "mongodb";
 
 const connect = async (): Promise<Db> => {
     const client = new MongoClient(env.MONGO_URI);
     await client.connect();
-    console.log("Connected successfully to mongodb successfully");
+    console.log("Connected successfully to mongodb");
     return client.db();
 };
 

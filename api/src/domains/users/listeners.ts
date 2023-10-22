@@ -2,7 +2,8 @@ import { TUser } from "@domains/users/repository";
 import { USERS_LOGIN } from "./events";
 
 import emitter from "@base/emitter";
+import { addEmail } from "@base/queue";
 
 emitter().on(USERS_LOGIN, (user: TUser) => {
-    console.log("Logged user: ", user);
+    addEmail({ to: user.email, subject: "Login Alert", template: "login_alert.ejs", data: user });
 });
