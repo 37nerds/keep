@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import ejs from "ejs";
 
-export const loadTemplates = (directoryPath: string): { [key: string]: string } => {
+const loadTemplates = (directoryPath: string): { [key: string]: string } => {
     const templates: { [key: string]: string } = {};
 
     fs.readdirSync(directoryPath).forEach((file) => {
@@ -17,3 +17,7 @@ export const loadTemplates = (directoryPath: string): { [key: string]: string } 
 export const render = (template: string, params: object) => {
     return ejs.render(template, params);
 };
+
+const templates = loadTemplates(path.join(__dirname, "..", "..", "tmpl"));
+
+export default templates;

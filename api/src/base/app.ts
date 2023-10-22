@@ -1,5 +1,7 @@
 import type { TUser } from "@domains/users/repository";
 
+import { loadDynamically } from "@helpers/mod";
+
 import koaLogger from "koa-logger";
 import koaJson from "koa-json";
 import koaCors from "@koa/cors";
@@ -33,13 +35,8 @@ const loadMiddlewares = async (app: Koa) => {
 
 const loadDomains = async (app: Koa) => {
     for (const domain of domains) {
-        const fileName = `../domains/${domain}/index`;
-        try {
-            const domainModule = await import(fileName);
-            domainModule.default(app);
-        } catch (error) {
-            console.error(`Error importing module for '${fileName}':`, error);
-        }
+        const m = await loadDynamically(`../domains/${domain}/index`);
+        m.default(app);
     }
 };
 
