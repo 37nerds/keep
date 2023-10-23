@@ -1,0 +1,38 @@
+<h1 style="color: #333;">Login Alert</h1>
+<p>Hello <b style="color: #333;">
+        <%= username %>
+    </b>,</p>
+
+<p>Your login information was recently accessed on <span style="color: #333;">
+        <%= new Date(updatedAt).toLocaleString() %>
+    </span>. If you did not perform this action, please take appropriate security measures immediately.</p>
+
+<p>Here is the information about the login:</p>
+<ul>
+    <li>Username: <span style="color: #333;">
+            <%= username %>
+        </span></li>
+    <li>Email: <span style="color: #333;">
+            <%= email %>
+        </span></li>
+    <li>Timestamp of Login: <span style="color: #333;">
+            <%= new Date(updatedAt).toLocaleString() %>
+        </span></li>
+    <li>IP Address: <span style="color: #333;">
+            <%= ip %>
+        </span></li>
+    <% if (location) { %>
+    <li>Location: <span style="color: #333;">
+            <%= location %>
+        </span></li>
+    <% } %>
+   <li>Browser/Device: <span style="color: #333;">
+            <%= userAgent %>
+        </span></li>
+</ul>
+
+<p>If you have any concerns or questions regarding this login activity, please contact our support team.</p>
+
+<p>Thank you for using our service.</p>
+
+<p>Sincerely,<br>37nerds Team</p>

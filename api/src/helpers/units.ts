@@ -1,10 +1,12 @@
-import type { TStatus } from "@base/types";
+import type { Db } from "mongodb";
 import type { Context } from "koa";
+import type { TStatus } from "@base/types";
+
+import { MongoClient } from "mongodb";
+
 import fs from "node:fs";
 import path from "node:path";
 import ejs from "ejs";
-import type { Db } from "mongodb";
-import { MongoClient } from "mongodb";
 import env from "@configs/env";
 
 export const connectMongodb = async (): Promise<Db> => {
@@ -44,8 +46,6 @@ export const loadDynamically = async (filepath: string) => {
 export const times = {
     hour: 60 * 60 * 1000,
 };
-
-
 
 export const isDev = () => {
     return env.NODE_ENV === "dev";

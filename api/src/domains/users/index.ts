@@ -20,14 +20,16 @@ import {
     update,
 } from "./handlers";
 
+import type { TUser } from "@domains/users/repository";
+
+import { emitter } from "@base/cache";
+
 import Router from "@koa/router";
 import Koa from "koa";
 import eh from "@base/eh";
 import validate from "@middlewares/validate";
 import protect from "@middlewares/protect";
-import {TUser} from "@domains/users/repository";
 import queue from "@base/queue";
-import {emitter} from "@base/cache";
 
 export const USERS_LOGIN = "users:login";
 export const USERS_LOGOUT = "users:logout";
@@ -38,7 +40,7 @@ export const USERS_FIND = "users:find";
 export const USERS_FINDS = "users:finds";
 
 emitter().on(USERS_LOGIN, (user: TUser, ip: string, userAgent: string) => {
-    queue("login_alert", {...user, ip, userAgent}).then(() => {});
+    queue("login_alert", { ...user, ip, userAgent }).then(() => {});
 });
 
 export default (app: Koa) => {

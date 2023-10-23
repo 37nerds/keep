@@ -1,5 +1,6 @@
-import type { TNodeEnv } from "@base/types";
 import "dotenv/config";
+
+import type { TNodeEnv } from "@base/types";
 
 type TEnv = {
     PORT: number;
@@ -17,7 +18,7 @@ type TEnv = {
     SMTP_PASSWORD: string;
 };
 
- const loadEnv = (name: string, defaultValue: string = ""): string => {
+const loadEnv = (name: string, defaultValue: string = ""): string => {
     return process.env[name] || defaultValue;
 };
 

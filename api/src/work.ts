@@ -1,3 +1,5 @@
 import worker from "@base/worker";
 
-worker().then(() => {});
+worker().then(() => {
+    console.log("worker is running...");
+});

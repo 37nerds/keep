@@ -1,4 +1,5 @@
-import { Context, Next } from "koa";
+import type { Context, Next } from "koa";
+
 import { HttpError, UnknownError } from "@helpers/errors";
 import { isDev } from "@helpers/units";
 
