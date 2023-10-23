@@ -11,9 +11,7 @@ const q = new Queue(QUEUE, {
 });
 
 const queue = async (name: string, params: object) => {
-    console.log("here", name);
-    const res = await q.add(name, params);
-    console.log(res);
+    await q.add(name, params);
 };
 
 export default queue;

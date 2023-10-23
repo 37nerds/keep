@@ -1,4 +1,4 @@
-import {templates} from "@base/cache";
+import { templates } from "@base/cache";
 import { Job, Worker } from "bullmq";
 import { QUEUE } from "./queue";
 import { loadDynamically } from "@helpers/units";
@@ -26,9 +26,6 @@ const worker = async () => {
     const w = new Worker(QUEUE, handler, {
         connection: { host: env.REDIS_HOSTNAME, port: env.REDIS_PORT },
     });
-
-    console.log("worker is running...");
-
     w.on("failed", (job, err) => {
         console.log(`>-- (${job?.id}) (${job?.name}) has failed with ${err.message}`);
     });

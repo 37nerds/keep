@@ -21,7 +21,7 @@ export const db = async () => {
 export const emitter = () => {
     if (!e) {
         e = new EventEmitter();
-        console.log("emitter created")
+        console.log("emitter created");
     }
     return e;
 };
@@ -29,8 +29,7 @@ export const emitter = () => {
 export const templates = () => {
     if (!t) {
         t = loadTemplates(path.join(__dirname, "..", "..", "tmpl"));
-        console.log("templates loaded")
+        console.log("templates loaded");
     }
     return t;
 };
-

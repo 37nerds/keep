@@ -45,8 +45,6 @@ export const times = {
     hour: 60 * 60 * 1000,
 };
 
-
-
 export const isDev = () => {
     return env.NODE_ENV === "dev";
 };

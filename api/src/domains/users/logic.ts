@@ -7,7 +7,7 @@ import { BadRequestError, ServerSideError } from "@helpers/errors";
 import jwt from "@helpers/jwt";
 import usersRepo from "./repository";
 import { times } from "@helpers/units";
-import {emitter} from "@base/cache";
+import { emitter } from "@base/cache";
 
 const AUTH_TOKEN = "auth_token";
 

@@ -6,7 +6,7 @@ import { USERS_CREATED, USERS_DELETED, USERS_FIND, USERS_FINDS, USERS_UPDATED } 
 
 import repository, { TDocBase } from "@base/repository";
 import crypto from "@helpers/crypto";
-import {emitter} from "@base/cache";
+import { emitter } from "@base/cache";
 
 export type TUser = TInsertUserBody & TDocBase;
 
