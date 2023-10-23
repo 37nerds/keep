@@ -35,11 +35,13 @@ export const reply = (ctx: Context, status: TStatus, body?: object) => {
     ctx.body = body;
 };
 
-export const loadDynamically = async (filepath: string) => {
+export const loadDynamically = async (filepath: string, logError: boolean = true) => {
     try {
         return await import(filepath);
-    } catch (error) {
-        console.error(`Error importing module for '${filepath}':`, error);
+    } catch (e: any) {
+        if (logError) {
+            console.error(`Error importing module for '${filepath}':`, e);
+        }
     }
 };
 
