@@ -1,4 +1,4 @@
-import { TStatus } from "./types";
+import { TStatus } from "@base/types";
 
 export class HttpError extends Error {
     status: TStatus;

@@ -1,11 +1,13 @@
 import type { Job } from "bullmq";
-import templates, { render } from "@base/templates";
-import sendMail from "@base/mailer";
-import { TUser } from "@domains/users/repository";
+import type { TUser } from "@domains/users/repository";
 
-export default async (job: Job<TUser & { ip: string }>) => {
+import sendMail from "@helpers/mailer";
+import { render } from "@helpers/units";
+import { templates } from "@base/cache";
+
+export default async (job: Job<TUser & { ip: string; userAgent: string }>) => {
     const params = job.data;
-    const content = render(templates["login_alert.ejs"], params);
+    const content = render(templates()["login_alert.ejs"], params);
     const res = await sendMail(params.email, "Login Alert - 37nerds/keep", content);
     console.log(res);
 };

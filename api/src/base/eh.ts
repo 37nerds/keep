@@ -1,6 +1,6 @@
 import { Context, Next } from "koa";
-import { HttpError, UnknownError } from "./errors";
-import { isDev } from "@helpers/config";
+import { HttpError, UnknownError } from "@helpers/errors";
+import { isDev } from "@helpers/units";
 
 const eh = <T>(func: (ctx: Context, next: Next) => Promise<T>) => {
     return async (ctx: Context, next: Next) => {

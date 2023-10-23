@@ -1,13 +1,13 @@
 import type { Context } from "koa";
 import type { TUser } from "./repository";
 
-import { hour } from "@helpers/time";
-import { USERS_LOGIN, USERS_LOGOUT } from "./events";
-import { BadRequestError, ServerSideError } from "@base/errors";
+import { USERS_LOGIN, USERS_LOGOUT } from "./index";
+import { BadRequestError, ServerSideError } from "@helpers/errors";
 
 import jwt from "@helpers/jwt";
-import emitter from "@base/emitter";
 import usersRepo from "./repository";
+import { times } from "@helpers/units";
+import {emitter} from "@base/cache";
 
 const AUTH_TOKEN = "auth_token";
 
@@ -28,9 +28,9 @@ export const loginUser = async (ctx: Context, user: TUser) => {
         const token = await jwt.generate(payload, expireInHours);
         ctx.cookies.set(AUTH_TOKEN, token, {
             httpOnly: true,
-            maxAge: hour * expireInHours,
+            maxAge: times.hour * expireInHours,
         });
-        emitter().emit(USERS_LOGIN, user, ctx.request.ip);
+        emitter().emit(USERS_LOGIN, user, ctx.request.ip, ctx.request.headers["user-agent"]);
     } catch (e: any) {
         throw new ServerSideError("unable to generate or set the token cookie");
     }

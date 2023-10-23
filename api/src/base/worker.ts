@@ -1,10 +1,10 @@
-import "./templates";
-
+import {templates} from "@base/cache";
 import { Job, Worker } from "bullmq";
 import { QUEUE } from "./queue";
-import { loadDynamically } from "@helpers/mod";
-
+import { loadDynamically } from "@helpers/units";
 import env from "@configs/env";
+
+templates();
 
 const gray = (v: string) => `\x1b[90m${v}\x1b[0m`; // Gray color
 

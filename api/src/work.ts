@@ -1,3 +1,3 @@
 import worker from "@base/worker";
 
-worker();
+worker().then(() => {});

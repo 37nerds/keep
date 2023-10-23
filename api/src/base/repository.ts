@@ -1,9 +1,8 @@
 import type { Filter, OptionalId, Document, WithId } from "mongodb";
 
-import { DatabaseError, NotFoundError, ProcessingError } from "./errors";
+import { DatabaseError, NotFoundError, ProcessingError } from "@helpers/errors";
 import { ObjectId } from "mongodb";
-
-import mongodb from "./mongodb";
+import { db } from "@base/cache";
 
 export type TDocBase = {
     _id: ObjectId;
@@ -21,8 +20,7 @@ const toObjectId = (_id: string): ObjectId => {
 };
 
 const getCollection = async (collection: string) => {
-    const db = await mongodb();
-    return db.collection(collection);
+    return (await db()).collection(collection);
 };
 
 const finds = async <T>(collection: string, shallow: boolean = false): Promise<T[]> => {

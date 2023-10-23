@@ -1,7 +1,7 @@
 import { verifyAuthToken } from "@domains/users/logic";
 import { Context, Next } from "koa";
 
-import eh from "@base/error_handler";
+import eh from "@base/eh";
 
 const protect = () => {
     return eh(async (ctx: Context, next: Next) => {
