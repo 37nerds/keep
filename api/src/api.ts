@@ -1,10 +1,10 @@
-import app from "./base/app";
-import env from "./configs/env";
+import app from "@base/app";
+import env from "@configs/env";
 
 const main = async () => {
     const a = await app();
     a.listen(env.PORT, () => {
-        console.log(`Server in running on port: ${env.PORT}`);
+        console.log(`api in running on port: ${env.PORT}`);
     });
 };
 

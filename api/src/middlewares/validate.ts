@@ -1,9 +1,9 @@
 import type { Context, Next } from "koa";
 
 import { Schema, z } from "zod";
-import { UnknownError, ValidationError } from "@base/errors";
+import { UnknownError, ValidationError } from "@helpers/errors";
 
-import eh from "@base/error_handler";
+import eh from "@base/eh";
 
 const validate = <T, T2>(querySchema: Schema | null, bodySchema: Schema | null) => {
     return eh(async (ctx: Context, next: Next) => {
