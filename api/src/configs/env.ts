@@ -1,5 +1,6 @@
-import type { TNodeEnv } from "@base/types";
 import "dotenv/config";
+
+import type { TNodeEnv } from "@base/types";
 
 type TEnv = {
     PORT: number;

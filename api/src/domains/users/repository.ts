@@ -1,12 +1,13 @@
 import type { TInsertUserBody, TUpdateUserBody } from "./schemas";
+import type { TDocBase } from "@base/repository";
 
 import { Document, Filter } from "mongodb";
 import { BadRequestError } from "@helpers/errors";
 import { USERS_CREATED, USERS_DELETED, USERS_FIND, USERS_FINDS, USERS_UPDATED } from "./index";
-
-import repository, { TDocBase } from "@base/repository";
-import crypto from "@helpers/crypto";
 import { emitter } from "@base/cache";
+
+import repository from "@base/repository";
+import crypto from "@helpers/crypto";
 
 export type TUser = TInsertUserBody & TDocBase;
 

@@ -1,6 +1,7 @@
 import type { TUser } from "@domains/users/repository";
 
 import { loadDynamically } from "@helpers/units";
+import { db } from "@base/cache";
 
 import koaLogger from "koa-logger";
 import koaJson from "koa-json";
@@ -12,7 +13,6 @@ import requestId from "@middlewares/request_id";
 import domains from "@configs/domains";
 
 import Koa from "koa";
-import { db } from "@base/cache";
 
 declare module "koa" {
     interface Context {

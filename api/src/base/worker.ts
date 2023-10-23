@@ -1,28 +1,31 @@
+import type { Job } from "bullmq";
+
 import { templates } from "@base/cache";
-import { Job, Worker } from "bullmq";
+import { Worker } from "bullmq";
 import { QUEUE } from "./queue";
 import { loadDynamically } from "@helpers/units";
+
 import env from "@configs/env";
 
-templates();
-
-const gray = (v: string) => `\x1b[90m${v}\x1b[0m`; // Gray color
+const gray = (v: string = "") => (v ? `\x1b[90m${v}\x1b[0m` : "");
+const cyan = (v: string = "") => (v ? `\x1b[36m${v}\x1b[0m` : "");
+const yellow = (v: string = "") => (v ? `\x1b[33m${v}\x1b[0m` : "");
+const green = (v: string = "") => (v ? `\x1b[32m${v}\x1b[0m` : "");
 
 const handler = async (job: Job) => {
     const startTime = new Date().getTime();
-    const idPart = `\x1b[36m${job.id}\x1b[0m`; // Cyan color
-    const namePart = `\x1b[33m${job.name}\x1b[0m`; // Yellow color
 
-    console.log(`  ${gray("<--")} ${idPart} ${namePart}`);
+    console.log(`${gray("<--")} ${cyan(job.id)} ${yellow(job.name)}`);
 
     const m = await loadDynamically(`../jobs/${job.name}`);
     await m.default(job);
 
     const time = new Date().getTime() - startTime;
-    console.log(`  ${gray("-->")} ${idPart} ${namePart} \x1b[32m${time}ms\x1b[0m`); // Green color for time
+    console.log(`${gray("-->")} ${cyan(job.id)} ${yellow(job.name)} ${green(`${time}ms`)}`);
 };
 
 const worker = async () => {
+    templates();
     const w = new Worker(QUEUE, handler, {
         connection: { host: env.REDIS_HOSTNAME, port: env.REDIS_PORT },
     });
