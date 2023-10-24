@@ -4,24 +4,16 @@ import { templates } from "@base/cache";
 import { Worker } from "bullmq";
 import { QUEUE } from "./queue";
 import { loadDynamically } from "@helpers/units";
+import { colors } from "@helpers/log";
 
 import env from "@configs/env";
-
-const gray = (v: string = "") => (v ? `\x1b[90m${v}\x1b[0m` : "");
-const cyan = (v: string = "") => (v ? `\x1b[36m${v}\x1b[0m` : "");
-const yellow = (v: string = "") => (v ? `\x1b[33m${v}\x1b[0m` : "");
-const green = (v: string = "") => (v ? `\x1b[32m${v}\x1b[0m` : "");
+import log from "@helpers/log";
 
 const handler = async (job: Job) => {
-    const startTime = new Date().getTime();
-
-    console.log(`${gray("<--")} ${cyan(job.id)} ${yellow(job.name)}`);
-
-    const m = await loadDynamically(`../jobs/${job.name}`);
-    await m.default(job);
-
-    const time = new Date().getTime() - startTime;
-    console.log(`${gray("-->")} ${cyan(job.id)} ${yellow(job.name)} ${green(`${time}ms`)}`);
+    await log.time(`${colors.cyan(job.id)} ${colors.yellow(job.name)}`, async () => {
+        const m = await loadDynamically(`../jobs/${job.name}`);
+        await m.default(job);
+    });
 };
 
 const worker = async () => {

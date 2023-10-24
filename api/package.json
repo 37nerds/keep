@@ -9,7 +9,9 @@
         "api:dev": "nodemon -r tsconfig-paths/register ./src/api.ts",
         "api:run": "TS_NODE_BASEURL='./dist' node -r tsconfig-paths/register ./dist/api.js",
         "work:dev": "nodemon -r tsconfig-paths/register ./src/work.ts",
-        "work:run": "TS_NODE_BASEURL='./dist' node -r tsconfig-paths/register ./dist/work.js"
+        "work:run": "TS_NODE_BASEURL='./dist' node -r tsconfig-paths/register ./dist/work.js",
+        "seed:append": "ts-node -r tsconfig-paths/register ./src/seed.ts",
+        "seed:refresh": "ts-node -r tsconfig-paths/register ./src/seed.ts 'drop before seed'"
     },
     "engines": {
         "node": ">=18.16.1",
@@ -38,6 +40,7 @@
         "zod": "^3.22.4"
     },
     "devDependencies": {
+        "@faker-js/faker": "^8.2.0",
         "@types/bcrypt": "^5.0.0",
         "@types/ejs": "^3.1.4",
         "@types/jsonwebtoken": "^9.0.3",
