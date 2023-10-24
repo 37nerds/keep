@@ -6,30 +6,30 @@ import { connectMongodb } from "@helpers/units";
 
 import path from "node:path";
 
-let t: { [key: string]: string };
-let d: Db;
-let e: EventEmitter;
+let _templates: { [key: string]: string };
+let _db: Db;
+let _emitter: EventEmitter;
 
 export const db = async () => {
-    if (!d) {
-        d = await connectMongodb();
+    if (!_db) {
+        _db = await connectMongodb();
         console.log("connected successfully to mongodb");
     }
-    return d;
+    return _db;
 };
 
 export const emitter = () => {
-    if (!e) {
-        e = new EventEmitter();
+    if (!_emitter) {
+        _emitter = new EventEmitter();
         console.log("emitter created");
     }
-    return e;
+    return _emitter;
 };
 
 export const templates = () => {
-    if (!t) {
-        t = loadTemplates(path.join(__dirname, "..", "..", "tmpl"));
+    if (!_templates) {
+        _templates = loadTemplates(path.join(__dirname, "..", "..", "tmpl"));
         console.log("templates loaded");
     }
-    return t;
+    return _templates;
 };

@@ -10,7 +10,8 @@
         "api:run": "TS_NODE_BASEURL='./dist' node -r tsconfig-paths/register ./dist/api.js",
         "work:dev": "nodemon -r tsconfig-paths/register ./src/work.ts",
         "work:run": "TS_NODE_BASEURL='./dist' node -r tsconfig-paths/register ./dist/work.js",
-        "seed": "ts-node -r tsconfig-paths/register ./src/seed.ts"
+        "seed:append": "ts-node -r tsconfig-paths/register ./src/seed.ts",
+        "seed:refresh": "ts-node -r tsconfig-paths/register ./src/seed.ts 'drop before seed'"
     },
     "engines": {
         "node": ">=18.16.1",
