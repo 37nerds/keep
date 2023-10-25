@@ -10,8 +10,7 @@
         "format": "prettier . --write"
     },
     "engines": {
-        "node": "^18.16.1",
-        "pnpm": "^7.26.3"
+        "node": "^18.16.1"
     },
     "dependencies": {
         "@heroicons/react": "^2.0.18",
