@@ -4,7 +4,7 @@
     "type": "commonjs",
     "main": "dist/main.js",
     "scripts": {
-        "build": "tsc",
+        "build": "pnpm install && tsc",
         "format": "prettier . --write",
         "api:dev": "nodemon -r tsconfig-paths/register ./src/api.ts",
         "api:run": "TS_NODE_BASEURL='./dist' node -r tsconfig-paths/register ./dist/api.js",
