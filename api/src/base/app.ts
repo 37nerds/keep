@@ -11,6 +11,7 @@ import koaStatic from "koa-static";
 import koaMount from "koa-mount";
 import requestId from "@middlewares/request_id";
 import domains from "@configs/domains";
+import KoaRouter from "@koa/router";
 
 import Koa from "koa";
 
@@ -31,6 +32,13 @@ const loadMiddlewares = async (app: Koa) => {
     app.use(koaLogger());
     app.use(koaJson());
     app.use(koaMount("/public", koaStatic("./public")));
+
+    const router = new KoaRouter();
+    router.get("/health", () => {
+        return "ok";
+    });
+    app.use(router.routes());
+    app.use(router.allowedMethods());
 };
 
 const loadDomains = async (app: Koa) => {
