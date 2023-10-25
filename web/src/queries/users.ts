@@ -1,6 +1,5 @@
 import { TError } from "@/helpers/types";
 import { useMutation, useQuery } from "react-query";
-import { useEffect } from "react";
 
 import http from "@/helpers/http";
 import { useMutationEH, useQueryEH } from "@/hooks/error_handlers";
