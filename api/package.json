@@ -4,7 +4,7 @@
     "type": "commonjs",
     "main": "dist/main.js",
     "scripts": {
-        "build": "tsc",
+        "build": "npx tsc",
         "format": "prettier . --write",
         "api:dev": "nodemon -r tsconfig-paths/register ./src/api.ts",
         "api:run": "TS_NODE_BASEURL='./dist' node -r tsconfig-paths/register ./dist/api.js",
@@ -14,8 +14,7 @@
         "seed:refresh": "ts-node -r tsconfig-paths/register ./src/seed.ts 'drop before seed'"
     },
     "engines": {
-        "node": "^18.16.1",
-        "pnpm": "^7.26.3"
+        "node": "^18.16.1"
     },
     "dependencies": {
         "@koa/bodyparser": "^5.0.0",
