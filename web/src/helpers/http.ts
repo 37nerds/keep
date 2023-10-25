@@ -1,10 +1,10 @@
-import { api_base_url } from "@/config/env";
+import env from "@/config/env";
 
 export type TMethod = "GET" | "POST" | "PATCH" | "DELETE";
 
 const http = {
     json: async (endpoint: string, method: TMethod, body: object | null, happy: number) => {
-        const response = await fetch(api_base_url + endpoint, {
+        const response = await fetch(env.API_BASE_URL + endpoint, {
             method,
             body: body ? JSON.stringify(body) : null,
             headers: {
