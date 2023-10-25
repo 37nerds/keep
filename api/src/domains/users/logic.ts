@@ -44,6 +44,7 @@ export const logoutUser = (ctx: Context) => {
 export const verifyAuthToken = async (ctx: Context): Promise<TUser> => {
     let decoded: TAuthTokenPayload;
     try {
+        console.log(ctx.cookies.get(AUTH_TOKEN));
         const authToken = ctx.cookies.get(AUTH_TOKEN);
         decoded = (await jwt.verify(authToken || "")) as TAuthTokenPayload;
     } catch (e: any) {
