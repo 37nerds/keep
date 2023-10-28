@@ -1,9 +1,71 @@
 version: "3"
 services:
+  mongodb:
+    image: mongo:7-jammy
+    container_name: keep-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./.mongodb:/data/db
+  redis:
+    image: redis:7-alpine
+    container_name: keep-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./.redis:/data
   api:
     build:
       context: ./api
     container_name: keep-api
     volumes:
-      - ./api:/app
-    command: [ "/bin/sh", "-c", "pnpm list && pnpm api:dev" ]
+      - ./api/public:/app/public
+      - ./api/src:/app/src
+      - ./api/tmpl:/app/tmpl
+      - ./api/.env:/app/.env
+      - ./api/.prettierignore:/app/.prettierignore
+      - ./api/prettier.config.mjs:/app/prettier.config.mjs
+      - ./api/tsconfig.json:/app/tsconfig.json
+    command: [ "/bin/sh", "-c", "ls -a && pnpm api:dev" ]
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongodb
+      - redis
+  work:
+    build:
+      context: ./api
+    container_name: keep-work
+    volumes:
+      - ./api/public:/app/public
+      - ./api/src:/app/src
+      - ./api/tmpl:/app/tmpl
+      - ./api/.env:/app/.env
+      - ./api/.prettierignore:/app/.prettierignore
+      - ./api/prettier.config.mjs:/app/prettier.config.mjs
+      - ./api/tsconfig.json:/app/tsconfig.json
+    command: [ "/bin/sh", "-c", "ls -a && pnpm work:dev" ]
+    depends_on:
+      - mongodb
+      - redis
+  web:
+    build:
+      context: ./web
+    container_name: keep-web
+    volumes:
+      - ./web/public:/app/public
+      - ./web/src:/app/src
+      - ./web/.env:/app/.env
+      - ./web/.eslintrc.cjs:/app/.eslintrc.cjs
+      - ./web/index.html:/app/index.html
+      - ./web/postcss.config.js:/app/postcss.config.js
+      - ./web/prettier.config.cjs:/app/prettier.config.cjs
+      - ./web/tailwind.config.js:/app/tailwind.config.js
+      - ./web/tsconfig.json:/app/tsconfig.json
+      - ./web/tsconfig.node.json:/app/tsconfig.node.json
+      - ./web/vite.config.ts:/app/vite.config.ts
+    command: [ "/bin/sh", "-c", "ls -a && pnpm dev" ]
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
