@@ -14,7 +14,7 @@
         "seed:refresh": "ts-node -r tsconfig-paths/register ./src/seed.ts 'drop before seed'"
     },
     "engines": {
-        "node": "^18.16.1"
+        "node": "^20.9.0"
     },
     "dependencies": {
         "@koa/bodyparser": "^5.0.0",
