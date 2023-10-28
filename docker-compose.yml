@@ -1,0 +1,9 @@
+version: "3"
+services:
+  api:
+    build:
+      context: ./api
+    container_name: keep-api
+    volumes:
+      - ./api:/app
+    command: [ "/bin/sh", "-c", "pnpm list && pnpm api:dev" ]
