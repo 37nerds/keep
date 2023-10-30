@@ -2,6 +2,7 @@ import worker from "@base/worker";
 import Koa from "koa";
 import Router from "@koa/router";
 import koaCors from "@koa/cors";
+import log from "@helpers/log";
 
 worker().then(() => {
     const app = new Koa();
@@ -19,7 +20,7 @@ worker().then(() => {
     app.use(router.allowedMethods());
 
     app.listen(9000, () => {
-        console.log("worker expose a port as well: 9000");
+        log.boot("worker expose a port as well: 9000");
     });
-    console.log("worker is running...");
+    log.boot("worker is running...");
 });

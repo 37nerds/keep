@@ -7,16 +7,17 @@ import { db } from "@base/cache";
 
 import repository from "@base/repository";
 import crypto from "@helpers/crypto";
+import log from "@helpers/log";
 
 export default async (f: Faker, count: number, deleteBefore: boolean = false) => {
     const c = (await db()).collection(USERS);
     if (deleteBefore) {
-        console.log(`removing the ${USERS} collection...`);
+        log.info(`removing the ${USERS} collection...`);
         await c.deleteMany();
-        console.log(`done`);
+        log.info(`done`);
     }
 
-    console.log("seeding the users with fake data...");
+    log.info("seeding the users with fake data...");
     if (deleteBefore) {
         await repository.insert<TInsertUserBody, TUser>(USERS, {
             username: "shihab",
@@ -33,5 +34,5 @@ export default async (f: Faker, count: number, deleteBefore: boolean = false) =>
             name: f.person.fullName(),
         });
     }
-    console.log("done");
+    log.info("done");
 };

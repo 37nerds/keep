@@ -6,6 +6,7 @@ import { templates } from "@base/cache";
 
 import useragent from "useragent";
 import sendMail from "@helpers/mailer";
+import log from "@helpers/log";
 
 export default async (job: Job<TUser & { ip: string; userAgent: string }>) => {
     const content = render(templates()["login_alert.email.ejs"], {
@@ -14,5 +15,5 @@ export default async (job: Job<TUser & { ip: string; userAgent: string }>) => {
         location: null,
     });
     const res = await sendMail(job.data.email, "Login Alert - 37nerds/keep", content);
-    console.log(res);
+    log.info(res);
 };

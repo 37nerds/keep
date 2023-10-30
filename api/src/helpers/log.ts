@@ -1,3 +1,5 @@
+import env from "@configs/env";
+
 const formatDuration = (durationInMilliseconds: number) => {
     const milliseconds = durationInMilliseconds % 1000;
     const seconds = Math.floor((durationInMilliseconds / 1000) % 60);
@@ -34,17 +36,22 @@ export const colors = {
 };
 
 const log = {
+    log: (...x: any) => console.log(...x),
+    debug: (...x: any) => {
+        if (env.NODE_ENV === "dev") {
+            log.log("[debug]:", ...x);
+        }
+    },
+    boot: (...x: any) => log.log("[boot]", ...x),
+    info: (...x: any) => log.log("[info]", ...x),
     time: async (message: string, func: Function) => {
         const startTime = new Date().getTime();
-        console.log(`${colors.gray("-->")} '${colors.cyan(message)}'`);
+        log.log(`${colors.gray("-->")} '${colors.cyan(message)}'`);
         await func();
         const time = new Date().getTime() - startTime;
-        console.log(
+        log.log(
             `${colors.gray("<--")} '${colors.cyan(message)}' ${colors.green(formatDuration(time))}`,
         );
-    },
-    debug: (...x: any) => {
-        console.error(x);
     },
 };
 

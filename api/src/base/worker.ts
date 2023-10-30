@@ -22,7 +22,7 @@ const worker = async () => {
         connection: { host: env.REDIS_HOSTNAME, port: env.REDIS_PORT },
     });
     w.on("failed", (job, err) => {
-        console.log(`>-- (${job?.id}) (${job?.name}) has failed with ${err.message}`);
+        log.info(`(${job?.id}) (${job?.name}) has failed with ${err.message}`);
     });
 };
 

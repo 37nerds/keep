@@ -1,9 +1,10 @@
 import app from "@base/app";
 import env from "@configs/env";
+import log from "@helpers/log";
 
 const main = async () => {
     (await app()).listen(env.PORT, () => {
-        console.log(`api is running... on port: ${env.PORT}`);
+        log.boot(`api is running... on port: ${env.PORT}`);
     });
 };
 

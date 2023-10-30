@@ -2,6 +2,7 @@ import type { Context, Next } from "koa";
 
 import { HttpError, UnknownError } from "@helpers/errors";
 import { isDev } from "@helpers/units";
+import log from "@helpers/log";
 
 const eh = <T>(func: (ctx: Context, next: Next) => Promise<T>) => {
     return async (ctx: Context, next: Next) => {
@@ -12,7 +13,6 @@ const eh = <T>(func: (ctx: Context, next: Next) => Promise<T>) => {
             if (!(e instanceof HttpError)) {
                 error = new UnknownError(e?.message || "");
             }
-            console.log(e);
             ctx.status = error.status;
             ctx.body = {
                 name: error.name,
@@ -20,6 +20,7 @@ const eh = <T>(func: (ctx: Context, next: Next) => Promise<T>) => {
                 errors: error?.errors ? JSON.parse(error.errors) : undefined,
                 stack: isDev() ? error.stack : undefined,
             };
+            log.debug(e);
         }
     };
 };

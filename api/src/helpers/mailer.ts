@@ -1,5 +1,6 @@
 import env from "@configs/env";
 import nodemailer from "nodemailer";
+import log from "@helpers/log";
 
 const transporter = nodemailer.createTransport({
     host: env.SMTP_HOST,
@@ -27,10 +28,10 @@ export const sendMail = (
             },
             (error, info) => {
                 if (error) {
-                    console.error("Error sending email:", error);
+                    log.info("error sending email:", error);
                     reject(error);
                 } else {
-                    console.log("Email sent:", info.response);
+                    log.info("email sent:", info.response);
                     resolve(info.response);
                 }
             },
