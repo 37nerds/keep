@@ -31,7 +31,6 @@ export const loginUser = async (ctx: Context, user: TUser) => {
             httpOnly: true,
             maxAge: times.hour * expireInHours,
             sameSite: "none",
-            secure: true,
         });
         emitter().emit(USERS_LOGIN, user, ctx.request.ip, ctx.request.headers["user-agent"]);
     } catch (e: any) {

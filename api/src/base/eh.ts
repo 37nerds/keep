@@ -12,6 +12,7 @@ const eh = <T>(func: (ctx: Context, next: Next) => Promise<T>) => {
             if (!(e instanceof HttpError)) {
                 error = new UnknownError(e?.message || "");
             }
+            console.log(e);
             ctx.status = error.status;
             ctx.body = {
                 name: error.name,
