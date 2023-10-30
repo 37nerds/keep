@@ -12,7 +12,6 @@ import koaMount from "koa-mount";
 import requestId from "@middlewares/request_id";
 import domains from "@configs/domains";
 import KoaRouter from "@koa/router";
-import koaSession from "koa-session";
 
 import Koa from "koa";
 
@@ -24,7 +23,6 @@ declare module "koa" {
 
 const loadMiddlewares = async (app: Koa) => {
     app.proxy = true;
-    app.use(koaSession({ secure: true } as any));
 
     app.use(requestId());
     app.use(koaBodyparser());
