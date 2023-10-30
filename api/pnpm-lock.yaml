@@ -94,6 +94,9 @@ devDependencies:
   '@types/koa-mount':
     specifier: ^4.0.4
     version: 4.0.4
+  '@types/koa-session':
+    specifier: ^6.4.4
+    version: 6.4.4
   '@types/koa-static':
     specifier: ^4.0.3
     version: 4.0.3
@@ -407,6 +410,13 @@ packages:
   /@types/koa-send@4.1.5:
     resolution: {integrity: sha512-O2qnxAKr7MoAxHHUitJejMWw45b9QtgTra0pnVDl/XoNdYTdZOgwj8wSVDon0qXg/lrcYHye4LFbAaSfSWwnrg==}
     dependencies:
+      '@types/koa': 2.13.10
+    dev: true
+
+  /@types/koa-session@6.4.4:
+    resolution: {integrity: sha512-HdHcUkCOur2tMGbdf8Yw0J5ISEADOe1Wl2uHV85iehuVXRbsJ1iTa+V/pgwDG95GlCja7yjpR0ydixXZGB3YZQ==}
+    dependencies:
+      '@types/cookies': 0.7.9
       '@types/koa': 2.13.10
     dev: true
 

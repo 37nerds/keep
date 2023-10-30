@@ -24,7 +24,7 @@ declare module "koa" {
 
 const loadMiddlewares = async (app: Koa) => {
     app.proxy = true;
-    app.use(koaSession({ secure: true }));
+    app.use(koaSession({ secure: true } as any));
 
     app.use(requestId());
     app.use(koaBodyparser());
