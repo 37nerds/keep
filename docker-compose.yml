@@ -26,7 +26,7 @@ services:
       - ./api/.prettierignore:/app/.prettierignore
       - ./api/prettier.config.mjs:/app/prettier.config.mjs
       - ./api/tsconfig.json:/app/tsconfig.json
-    command: [ "/bin/sh", "-c", "ls -a && pnpm api:dev" ]
+    command: ["/bin/sh", "-c", "ls -a && pnpm api:dev"]
     ports:
       - "8000:8000"
     depends_on:
@@ -44,7 +44,7 @@ services:
       - ./api/.prettierignore:/app/.prettierignore
       - ./api/prettier.config.mjs:/app/prettier.config.mjs
       - ./api/tsconfig.json:/app/tsconfig.json
-    command: [ "/bin/sh", "-c", "ls -a && pnpm work:dev" ]
+    command: ["/bin/sh", "-c", "ls -a && pnpm work:dev"]
     depends_on:
       - mongodb
       - redis
@@ -64,7 +64,7 @@ services:
       - ./web/tsconfig.json:/app/tsconfig.json
       - ./web/tsconfig.node.json:/app/tsconfig.node.json
       - ./web/vite.config.ts:/app/vite.config.ts
-    command: [ "/bin/sh", "-c", "ls -a && pnpm dev" ]
+    command: ["/bin/sh", "-c", "ls -a && pnpm dev"]
     ports:
       - "3000:3000"
     depends_on:

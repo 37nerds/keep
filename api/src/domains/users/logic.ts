@@ -8,6 +8,7 @@ import { emitter } from "@base/cache";
 
 import jwt from "@helpers/jwt";
 import usersRepo from "./repository";
+import env from "@configs/env";
 
 const AUTH_TOKEN = "auth_token";
 
@@ -29,6 +30,8 @@ export const loginUser = async (ctx: Context, user: TUser) => {
         ctx.cookies.set(AUTH_TOKEN, token, {
             httpOnly: true,
             maxAge: times.hour * expireInHours,
+            sameSite: "none",
+            secure: true,
         });
         emitter().emit(USERS_LOGIN, user, ctx.request.ip, ctx.request.headers["user-agent"]);
     } catch (e: any) {

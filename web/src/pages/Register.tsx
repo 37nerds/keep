@@ -1,8 +1,9 @@
-import AuthLayout from "@/layouts/AuthLayout";
 import { useRegisterMutation } from "@/queries/users";
 import { useAuthStore } from "@/states/auth_store";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+import AuthLayout from "@/layouts/AuthLayout";
 
 const Register = () => {
     const [formData, setFormData] = useState({
