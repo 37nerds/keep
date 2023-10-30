@@ -43,6 +43,9 @@ const log = {
             `${colors.gray("<--")} '${colors.cyan(message)}' ${colors.green(formatDuration(time))}`,
         );
     },
+    debug: (...x: any) => {
+        console.error(x);
+    },
 };
 
 export default log;
