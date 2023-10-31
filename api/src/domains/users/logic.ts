@@ -2,14 +2,14 @@ import type { Context } from "koa";
 import type { TUser } from "./repository";
 
 import { USERS_LOGIN, USERS_LOGOUT } from "./index";
-import { BadRequestError, ServerSideError } from "@helpers/errors";
-import { times } from "@helpers/units";
-import { emitter } from "@base/cache";
+import { BadRequestError, ServerSideError } from "@/helpers/errors";
+import { times } from "@/helpers/units";
+import { emitter } from "@/base/cache";
 
-import jwt from "@helpers/jwt";
+import jwt from "@/helpers/jwt";
 import usersRepo from "./repository";
-import env from "@configs/env";
-import log from "@helpers/log";
+import env from "@/configs/env";
+import log from "@/helpers/log";
 
 const AUTH_TOKEN = "auth_token";
 

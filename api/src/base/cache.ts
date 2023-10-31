@@ -1,11 +1,11 @@
 import type { Db } from "mongodb";
 
 import { EventEmitter } from "node:events";
-import { loadTemplates } from "@helpers/units";
-import { connectMongodb } from "@helpers/units";
+import { loadTemplates } from "@/helpers/units";
+import { connectMongodb } from "@/helpers/units";
 
 import path from "node:path";
-import log from "@helpers/log";
+import log from "@/helpers/log";
 
 let _templates: { [key: string]: string };
 let _db: Db;

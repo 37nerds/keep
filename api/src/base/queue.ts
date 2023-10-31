@@ -1,6 +1,6 @@
 import { Queue } from "bullmq";
 
-import env from "@configs/env";
+import env from "@/configs/env";
 
 export const QUEUE = "keep-queue";
 

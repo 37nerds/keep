@@ -20,16 +20,16 @@ import {
     update,
 } from "./handlers";
 
-import type { TUser } from "@domains/users/repository";
+import type { TUser } from "@/domains/users/repository";
 
-import { emitter } from "@base/cache";
+import { emitter } from "@/base/cache";
 
 import Router from "@koa/router";
 import Koa from "koa";
-import eh from "@base/eh";
-import validate from "@middlewares/validate";
-import protect from "@middlewares/protect";
-import queue from "@base/queue";
+import eh from "@/base/eh";
+import validate from "@/middlewares/validate";
+import protect from "@/middlewares/protect";
+import queue from "@/base/queue";
 
 export const USERS_LOGIN = "users:login";
 export const USERS_LOGOUT = "users:logout";

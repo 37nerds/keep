@@ -1,8 +1,8 @@
-import worker from "@base/worker";
+import worker from "@/base/worker";
 import Koa from "koa";
 import Router from "@koa/router";
 import koaCors from "@koa/cors";
-import log from "@helpers/log";
+import log from "@/helpers/log";
 
 worker().then(() => {
     const app = new Koa();

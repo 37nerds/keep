@@ -1,13 +1,13 @@
 import type { Db } from "mongodb";
 import type { Context } from "koa";
-import type { TStatus } from "@base/types";
+import type { TStatus } from "@/base/types";
 
 import { MongoClient } from "mongodb";
 
 import fs from "node:fs";
 import path from "node:path";
 import ejs from "ejs";
-import env from "@configs/env";
+import env from "@/configs/env";
 
 export const connectMongodb = async (): Promise<Db> => {
     const client = new MongoClient(env.MONGO_URI);

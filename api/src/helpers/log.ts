@@ -1,4 +1,4 @@
-import env from "@configs/env";
+import env from "@/configs/env";
 
 const formatDuration = (durationInMilliseconds: number) => {
     const milliseconds = durationInMilliseconds % 1000;

@@ -3,11 +3,11 @@ import type { Faker } from "@faker-js/faker";
 import type { TUser } from "./repository";
 
 import { USERS } from "./repository";
-import { db } from "@base/cache";
+import { db } from "@/base/cache";
 
-import repository from "@base/repository";
-import crypto from "@helpers/crypto";
-import log from "@helpers/log";
+import repository from "@/base/repository";
+import crypto from "@/helpers/crypto";
+import log from "@/helpers/log";
 
 export default async (f: Faker, count: number, deleteBefore: boolean = false) => {
     const c = (await db()).collection(USERS);

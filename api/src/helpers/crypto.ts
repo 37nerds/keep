@@ -1,4 +1,4 @@
-import env from "@configs/env";
+import env from "@/configs/env";
 import bcrypt from "bcrypt";
 
 const saltRounds = env.CRYPTO_SALT_ROUNDS;

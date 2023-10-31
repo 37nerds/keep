@@ -1,6 +1,6 @@
 import "dotenv/config";
 
-import type { TNodeEnv } from "@base/types";
+import type { TNodeEnv } from "@/base/types";
 
 const le = (n: string, d = ""): string => process.env[n] || d;
 

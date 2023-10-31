@@ -1,4 +1,4 @@
-import type { TUser } from "@domains/users/repository";
+import type { TUser } from "@/domains/users/repository";
 
 import { ObjectId } from "mongodb";
 import { z } from "zod";
@@ -15,7 +15,7 @@ export type TUserResponse = {
 export const registerUserBodySchema = z.object({
     username: z.string(),
     email: z.string(),
-    password: z.string(),
+    password: z.string().min(6),
     name: z.string().optional(),
 });
 

@@ -1,13 +1,13 @@
 import type { Job } from "bullmq";
 
-import { templates } from "@base/cache";
+import { templates } from "@/base/cache";
 import { Worker } from "bullmq";
 import { QUEUE } from "./queue";
-import { loadDynamically } from "@helpers/units";
-import { colors } from "@helpers/log";
+import { loadDynamically } from "@/helpers/units";
+import { colors } from "@/helpers/log";
 
-import env from "@configs/env";
-import log from "@helpers/log";
+import env from "@/configs/env";
+import log from "@/helpers/log";
 
 const handler = async (job: Job) => {
     await log.time(`${colors.cyan(job.id)} ${colors.yellow(job.name)}`, async () => {

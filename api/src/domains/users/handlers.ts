@@ -12,12 +12,12 @@ import type { Context } from "koa";
 import type { TUser } from "./repository";
 
 import { userResponse } from "./schemas";
-import { BadRequestError } from "@helpers/errors";
-import { reply } from "@helpers/units";
+import { BadRequestError } from "@/helpers/errors";
+import { reply } from "@/helpers/units";
 import { loginUser, logoutUser } from "./logic";
 
 import usersRepo from "./repository";
-import crypto from "@helpers/crypto";
+import crypto from "@/helpers/crypto";
 
 export const register = async (ctx: Context) => {
     const user = await usersRepo.insert(ctx.request.body as TRegisterUserBody);

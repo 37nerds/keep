@@ -1,9 +1,9 @@
-import { loadDynamically } from "@helpers/units";
+import { loadDynamically } from "@/helpers/units";
 import { faker } from "@faker-js/faker";
 
-import domains, { seed_items_count } from "@configs/domains";
-import app from "@base/app";
-import log from "@helpers/log";
+import domains, { seed_items_count } from "@/configs/domains";
+import app from "@/base/app";
+import log from "@/helpers/log";
 
 const main = async () => {
     await app();
