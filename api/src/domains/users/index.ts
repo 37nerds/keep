@@ -44,7 +44,7 @@ emitter().on(USERS_LOGIN, (user: TUser, ip: string, userAgent: string) => {
 });
 
 export default (app: Koa) => {
-    const r = new Router({ prefix: "/api/v1/users" });
+    const r = new Router({ prefix: "/v1/users" });
 
     r.post("/register", validate(null, registerUserBodySchema), eh(register));
     r.post("/login", validate(null, loginUserBodySchema), eh(login));
