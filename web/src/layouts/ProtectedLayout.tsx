@@ -15,7 +15,7 @@ const ProtectedLayout = () => {
     return (
         <div className="flex h-screen w-screen flex-col bg-[#202124] text-white">
             <Header />
-            <div className="flex h-full overflow-hidden">
+            <div className="flex h-full w-full overflow-hidden">
                 <Sidebar />
                 <PageContainer>
                     <Outlet />

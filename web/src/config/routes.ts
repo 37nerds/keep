@@ -2,7 +2,7 @@ import type { TRoute } from "@/types";
 
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
-import Home from "@/pages/Home";
+import Root from "@/pages/Root";
 
 export const guest_routes: TRoute[] = [
     {
@@ -18,7 +18,7 @@ export const guest_routes: TRoute[] = [
 export const protected_routes: TRoute[] = [
     {
         path: "/",
-        component: Home,
+        component: Root,
     },
 ];
 
