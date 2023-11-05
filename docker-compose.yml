@@ -5,9 +5,12 @@ services:
       context: ./conf/nginx
     container_name: keep-nginx
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - ./conf/nginx/conf.d/:/etc/nginx/conf.d/
+    depends_on:
+      - api
+      - web
   mongodb:
     image: mongo:7-jammy
     container_name: keep-mongodb
@@ -38,7 +41,6 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - nginx
       - mongodb
       - redis
     environment:
@@ -58,7 +60,6 @@ services:
       - ./api/tsconfig.json:/app/tsconfig.json
     command: ["/bin/sh", "-c", "ls -a && pnpm work:dev"]
     depends_on:
-      - nginx
       - mongodb
       - redis
     environment:
@@ -84,5 +85,4 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - nginx
       - api
